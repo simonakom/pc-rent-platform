@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider,} from "react-router-dom";
 import RegistrationWindow from "./Registration/Register";
+import LoginPage from "./Login/Login";
+import NotFound from "./not-found/NotFound"
 
 const router = createBrowserRouter([
   {
@@ -15,13 +17,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <div>Login</div>,
+    element: <LoginPage />,
   },
   {
-    path: "/login",
-    element: <div>Login</div>,
-  },
-  
+    path: "*",
+    element: <NotFound />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
