@@ -5,11 +5,12 @@ import { createBrowserRouter, RouterProvider,} from "react-router-dom";
 import RegistrationWindow from "./Registration/Register";
 import LoginPage from "./Login/Login";
 import NotFound from "./not-found/NotFound"
+import Main from "./Main/Main";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div className=''>Hello world!</div>,
+    element:<Main />,
   },
   {
     path: "/registration",

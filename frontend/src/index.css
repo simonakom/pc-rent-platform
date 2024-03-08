@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 .register-bg {
-    /* background: radial-gradient(circle, #1c4f76 38%, #061829 92%) */
     background-image: url(./assets/bg.jpg);
     background-size: cover;
     background-position: center;
@@ -14,3 +13,7 @@
     background-size: cover;
     background-position: center;
 }
+
+/* .bg {
+    background: radial-gradient(circle, #1c4f76 38%, #061829 92%)
+} */

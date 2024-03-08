@@ -43,7 +43,7 @@ export default function RegistrationWindow(){
                 <img className="w-[60px] mb-4" src={clickImage} alt="click" />
                 <h1 className="text-4xl text-white">Registration</h1>
             </div>
-            <div className="min-w-[300px] sm:min-w-[400px] bg-[#000000b3] p-5 rounded-xl text-[white] p-10">
+            <div className="min-w-[300px] sm:min-w-[400px] bg-[#000000b3] rounded-xl text-[white] p-10">
                 <h1 className="text-xl sm:text-2xl font-medium mb-2 text-[white]">Personal details</h1>
                 <hr className="mb-5 border-t-1 border-gray-500" />
                 <form>
@@ -55,7 +55,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInUserDetails(e, "username")}
                                 type="text"
                                 placeholder="Enter your username..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -66,7 +66,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInUserDetails(e, "password")}
                                 type="password" 
                                 placeholder="Enter your password..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -77,7 +77,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInUserDetails(e, "email")}
                                 type="email" 
                                 placeholder="Enter your email..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -87,7 +87,7 @@ export default function RegistrationWindow(){
                                 value={userDetails.birthDate}
                                 onChange={(e)=>setFieldInUserDetails(e, "birthDate")}
                                 type="date" 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -98,7 +98,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInUserDetails(e, "phone")}
                                 type="number" 
                                 placeholder="Enter your phone number..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
 
@@ -110,7 +110,7 @@ export default function RegistrationWindow(){
                             <select 
                                 value={addressDetails.country}
                                 onChange={(e)=>setFieldInAddressDetails(e,"country")}
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md">
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]">
                                     <option>Lithuania</option>
                                     <option>Latvia</option>
                                     <option>United Kingdom</option>
@@ -125,7 +125,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInAddressDetails(e,"county")}
                                 type="text" 
                                 placeholder="Enter your County..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md"/>
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]"/>
                         </label>
                     </div>
                     <div className="mb-2">
@@ -136,7 +136,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInAddressDetails(e,"municipality")}
                                 type="text" 
                                 placeholder="Enter your municipality..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2"> 
@@ -147,7 +147,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInAddressDetails(e,"postalCode")}
                                 type="text"
                                 placeholder="Enter your postal code..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -158,7 +158,7 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInAddressDetails(e,"city")}
                                 type="text" 
                                 placeholder="Enter your city..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
@@ -169,25 +169,25 @@ export default function RegistrationWindow(){
                                 onChange={(e)=>setFieldInAddressDetails(e,"street")}
                                 type="text" 
                                 placeholder="Enter your street..." 
-                                className="outline-none border w-4/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mb-2">
-                        <label className="flex flex-col sm:flex-row items-center gap-2">
-                            <span className="w-full sm:w-1/3 mb-2 sm:mb-0">Street number:</span>
+                        <label className="flex flex-col sm:flex-row items-center gap-1">
+                            <span className="w-full sm:w-2/3 mb-2 sm:mb-0">Street number:</span>
                             <input 
                                 value={addressDetails.streetNumber}
                                 onChange={(e)=> {setNumberField( e, "streetNumber", 400) }}
                                 type="text"  
                                 placeholder="Street number..." 
-                                className="outline-none border w-3/5 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                             <span className="mr-3"></span>
                             <input 
                                 value={addressDetails.apartamentNumber}
                                 onChange={(e)=> {setNumberField( e, "apartamentNumber", 400) }}
                                 type="text" 
                                 placeholder="Apartment number..." 
-                                className="outline-none border w-3/6 px-2 py-1 rounded-md" />
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]" />
                         </label>
                     </div>
                     <div className="mt-10">

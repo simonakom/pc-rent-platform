@@ -14,7 +14,7 @@ export default function LoginPage() {
                     <input
                         type="text"
                         placeholder="Enter your username..."
-                        className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#3c0f3f60]"
+                        className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]"
                     />
                 </label>
             </div>
@@ -24,7 +24,7 @@ export default function LoginPage() {
                     <input
                         type="password"
                         placeholder="Enter your password..."
-                        className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#3c0f3f60]"
+                        className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#7e428260]"
                     />
                 </label>
             </div>
