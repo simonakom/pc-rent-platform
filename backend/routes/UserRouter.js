@@ -47,41 +47,22 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
-//Update
-// router.put("/:id", async (req, res) => {
-// 	const {username, passEncoded, email, birthDate, phone, addressId} = req.body;
-// 	const userObj = await UserModel.findById(req.params.id);
-// 	if (username)
-// 	userObj.username = username;
-// 	if (passEncoded)
-// 	userObj.passEncoded = passEncoded;
-// 	if (email)
-// 	userObj.email = email;
-// 	if (birthDate)
-// 	userObj.birthDate = birthDate;
-// 	if (phone)
-// 	userObj.phone = phone;
-// 	if (addressId)
-// 	userObj.addressId = addressId;
-
-// 		await userObj.update();
-// 		res.send(userObj.getInstance());
-// })
-
-
+Update
 router.put("/:id", async (req, res) => {
-	const { username, passEncoded, email, birthDate, phone, addressId } =
-	  req.body;
+	const {username, passEncoded, email, birthDate, phone, addressId} = req.body;
 	const userObj = await UserModel.findById(req.params.id);
+
 	if (username) userObj.username = username;
 	if (passEncoded) userObj.passEncoded = passEncoded;
 	if (email) userObj.email = email;
 	if (birthDate) userObj.birthDate = birthDate;
 	if (phone) userObj.phone = phone;
 	if (addressId) userObj.addressId = addressId;
-  
-	await userObj.update();
-	res.send(userObj.getInstance());
-  });
+
+		await userObj.update();
+		res.send(userObj.getInstance());
+})
+
+
 
 module.exports = router;
