@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-	res.send("Veikia pc routeris");
+	res.send("Pc route working");
 });
 router.get("/kazkoks", (req, res) => {
-	res.send("Veikia kazkoks pc routeris");
+	res.send("Route working");
 });
 
 module.exports = router;

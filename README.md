@@ -8,5 +8,11 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
-backend: nodejs, mysql 
-frontend: vite, i "npm install react-router-dom localforage match-sorter sort-by"
+backend  (nodejs) install: 
+- npm install --save mysql2
+- npm i express
+
+frontend (vite) install:
+- npm install
+- npm install react-router-dom localforage match-sorter sort-by
+- tailwind
