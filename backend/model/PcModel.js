@@ -42,6 +42,7 @@ module.exports = class PC {
 		this.#id = result.insertId;
 		return result;
 	}
+	
     static async findAll() {
         const results = await executeQuery(`SELECT * FROM pc`)
         console.log(results);
@@ -63,29 +64,29 @@ module.exports = class PC {
         return result;
         }
 
-	    static async findById(id) { 
-			const results = await executeQuery(`SELECT * FROM pc WHERE id=?`, [id,]);
-			console.log(results);
-			const result = results[0][0];
-			return new PC({
-						ownerId: result.owner_id, 
-						cpu: result.cpu, 
-						gpu: result.gpu, 
-						ramType: result.ram_type, 
-						ramSpeed: result.ram_speed, 
-						ramAmount: result.ram_amount, 
-						pcType: result.pc_type
-			},
-				result.id
-			);
-		}
+	static async findById(id) { 
+		const results = await executeQuery(`SELECT * FROM pc WHERE id=?`, [id,]);
+		console.log(results);
+		const result = results[0][0];
+		return new PC({
+					ownerId: result.owner_id, 
+					cpu: result.cpu, 
+					gpu: result.gpu, 
+					ramType: result.ram_type, 
+					ramSpeed: result.ram_speed, 
+					ramAmount: result.ram_amount, 
+					pcType: result.pc_type
+		},
+			result.id
+		);
+	}
 
-		static async deleteById(id) {
-			const result = await executeQuery(`DELETE FROM pc WHERE id=?`, [id]);
-			console.log(result); 
-			if(result[0].affectedRows === 0) throw new Error("PC not found");
-			return result;
-			}
+	static async deleteById(id) {
+		const result = await executeQuery(`DELETE FROM pc WHERE id=?`, [id]);
+		console.log(result); 
+		if(result[0].affectedRows === 0) throw new Error("PC not found");
+		return result;
+		}
 	
     
     async update() {
