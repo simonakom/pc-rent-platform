@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
 	}catch(err){
 		console.error(err);
 		if(err.errno === 1062)
-		res.status(400).send("Adding not possible. Country already exist");
+		res.status(400).send("Adding not possible. User already exist");
 	else {
 		res.status(500).send("Server error")
 		}
@@ -47,7 +47,7 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
-Update
+//Update
 router.put("/:id", async (req, res) => {
 	const {username, passEncoded, email, birthDate, phone, addressId} = req.body;
 	const userObj = await UserModel.findById(req.params.id);
