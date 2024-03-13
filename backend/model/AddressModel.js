@@ -39,7 +39,7 @@ module.exports = class Address {
 
 	async save() {
 		const result = await executeQuery(
-			`INSERT INTO addresses (country, county, municipality, zipCode, city, street, street_number, apartment_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+			`INSERT INTO addresses (country, county, municipality, zip_code, city, street, street_number, apartment_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
 			[
 				this.country,
 				this.county,
@@ -102,7 +102,7 @@ module.exports = class Address {
 
     async update() {
 		const result = await executeQuery(
-			`UPDATE addresses SET country = ?, county = ?, municipality = ?, zipCode = ?, city = ?, street = ?, street_number = ?, apartment_number = ? WHERE id = ?`,
+			`UPDATE addresses SET country = ?, county = ?, municipality = ?, zip_code = ?, city = ?, street = ?, street_number = ?, apartment_number = ? WHERE id = ?`,
 			[
 				this.country,
 				this.county,

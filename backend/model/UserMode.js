@@ -4,12 +4,13 @@ module.exports = class User {
     #id; //# - field is private and not updated outside of class 
     username;
     passEncoded;
+    salt;
     email;
     birthDate;
     phone;
     addressId;
 
-    constructor({ username, passEncoded, email, birthDate, phone, addressId}, id = null){
+    constructor({ username, passEncoded, email, birthDate, phone, addressId, salt}, id = null){
         this.#id = id;
         this.username = username;
         this.passEncoded = passEncoded;
@@ -17,14 +18,15 @@ module.exports = class User {
         this.birthDate = birthDate;
         this.phone = phone;
         this.addressId = addressId;
+        this.salt = salt;
         }
 
         get id () { return this.#id; }
 
         async save(){
         const result = await executeQuery(
-            `INSERT INTO users (username, pass_encoded, email, birth_date, phone, address_id) VALUES (?, ?, ?, ?, ?, ?);`,
-                [this.username, this.passEncoded, this.email, this.birthDate, this.phone, this.addressId]);
+            `INSERT INTO users (username, pass_encoded, email, birth_date, phone, address_id, salt) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+                [this.username, this.passEncoded, this.email, this.birthDate, this.phone, this.addressId, this.salt]);
             console.log(result);
             this.#id = result[0].insertId;
         }
@@ -42,6 +44,7 @@ module.exports = class User {
                             birthDate: userObj.birth_date,
                             phone: userObj.phone,
                             addressId: userObj.address_id,
+                            salt: userObj.salt
                         },
                         userObj.id
                         )
@@ -60,6 +63,7 @@ module.exports = class User {
                 birthDate: result.birth_date,
                 phone: result.phone,
                 addressId: result.address_id,
+                salt: result.salt
             },
                 result.id
             );
@@ -73,10 +77,10 @@ module.exports = class User {
             }
     
         async update(){
-            const result = await executeQuery(`UPDATE users SET username =?, pass_encoded =?, email =?, birth_date =?, phone =?, address_id =? WHERE id=?`, 
-            [this.username, this.passEncoded, this.email, this.birthDate, this.phone, this.addressId, this.#id])
+            const result = await executeQuery(`UPDATE users SET username =?, pass_encoded =?, email =?, birth_date =?, phone =?, address_id =?, salt=? WHERE id=?`, 
+            [this.username, this.passEncoded, this.email, this.birthDate, this.phone, this.addressId, this.salt, this.#id])
                 console.log(result);
-                return result;
+                return result; 
             }
 
         getInstance(){

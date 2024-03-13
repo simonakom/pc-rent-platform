@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .register-bg {
-    background-image: url(./assets/bg.jpg);
+    background-image: url(./assets/minimalistic-home-desk-design.jpg);
     background-size: cover;
     background-position: center;
 }
 
 .not-found-bg {
-    background-image: url(./assets/not-found.jpg);
+    background-image: url(./assets/bg.jpg);
     background-size: cover;
     background-position: center;
 }

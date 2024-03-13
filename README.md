@@ -11,6 +11,8 @@ Currently, two official plugins are available:
 backend  (nodejs) install: 
 - npm install --save mysql2
 - npm i express
+- npm i express-session
+- npm i express-mysql-session
 
 frontend (vite) install:
 - npm install
