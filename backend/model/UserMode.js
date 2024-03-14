@@ -1,7 +1,7 @@
 const executeQuery = require("../mysql")
 
 module.exports = class User {
-    #id; //# - field is private and not updated outside of class 
+    #id; 
     username;
     passEncoded;
     salt;

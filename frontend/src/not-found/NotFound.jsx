@@ -1,8 +1,9 @@
+import clickImage from '../assets/screen.png'; 
 export default function NotFound() {
 	return (
         <div className="min-h-screen flex justify-center items-center not-found-bg py-10 px-6 overflow-hidden">
             <div className="max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl text-center bg-black bg-opacity-70 text-white rounded-2xl p-6">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#dcbadc]">404</h1>
+                <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#c98bc9]">404</h1>
                 <h2 className="text-2xl md:text-3xl font-semibold mb-2">Page Not Found</h2>
                 <p className="mb-4 text-justify">
 					We&apos;re sorry, but the page you were looking for doesn&apos;t seem
@@ -21,8 +22,9 @@ export default function NotFound() {
                     this message, please contact our support team for assistance.
                     We&apos;re here to help you navigate and find exactly what you need.
                 </p>
-                <div className="my-8">
+                <div className="my-8 flex flex-col justify-center items-center">
                     <a href="/" className="bg-[#60346b] hover:bg-purple-800 px-4 py-2 rounded-lg text-lg md:text-xl whitespace-nowrap">Go Home</a>
+                    <img className="w-[60px] mt-5" src={clickImage} alt="click" />
                 </div>
             </div>
         </div>

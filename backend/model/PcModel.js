@@ -1,7 +1,7 @@
 const executeQuery = require("../mysql");
 
 module.exports = class PC {
-	#id; // Private field for PC ID
+	#id; 
 	ownerId;
 	cpu;
 	gpu;

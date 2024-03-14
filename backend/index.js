@@ -3,7 +3,7 @@ const app = express();
 const mainRouter = require("./MainRouter");
 const setupSessions = require("./utils/sessionsSetup");
 
-app.use(express.json()); // to receive json format data into the backend (use req.body)
+app.use(express.json()); // to receive json format data into the backend (to use req.body)
 setupSessions(app);
 app.use("/api", mainRouter);
 

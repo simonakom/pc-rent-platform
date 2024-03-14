@@ -3,17 +3,23 @@
 @tailwind utilities;
 
 .register-bg {
-    background-image: url(./assets/minimalistic-home-desk-design.jpg);
+    background-image: url(./assets/bg-register.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.login-bg {
+    background-image: url(./assets/bg-login.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.main-bg {
+    background-image: url(./assets/bg-main.png);
     background-size: cover;
     background-position: center;
 }
 
 .not-found-bg {
-    background-image: url(./assets/bg.jpg);
+    background-image: url(./assets/bg-notfound.jpg);
     background-size: cover;
     background-position: center;
 }
-
-/* .bg {
-    background: radial-gradient(circle, #1c4f76 38%, #061829 92%)
-} */

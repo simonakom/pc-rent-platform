@@ -18,3 +18,5 @@ frontend (vite) install:
 - npm install
 - npm install react-router-dom localforage match-sorter sort-by
 - tailwind
+
+nginx
