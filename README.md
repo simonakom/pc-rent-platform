@@ -22,5 +22,5 @@ frontend (vite) install:
 nginx
 
 
-🔹 Preview -  <a href="https://simonakom.github.io/pc-rent-platform/dist/index.html" style="font-size:small;">View</a><h4>
+🔹 Preview -  <a href="https://simonakom.github.io/pc-rent-platform/frontend/dist/index.html" style="font-size:small;">View</a><h4>
  
