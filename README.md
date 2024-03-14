@@ -1,26 +1,58 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# <span style="margin-right: 10px;"><img src="./frontend/src/assets/screen.png" alt="Spotify" style="height: 2em; vertical-align: middle;"></span> PC rent platform
 
-Currently, two official plugins are available:
+<div align="center">
+  <img src="https://img.shields.io/badge/📖%20license-%20MIT-a964d0.svg" alt="48 items"/> 
+  <img id="last-update-badge" src="https://img.shields.io/badge/%F0%9F%93%85%20Last%20update%20-%20March%2014%202024-orange.svg" alt="Last update: march 14, 2024" /> 
+  <img src="https://img.shields.io/badge/%E2%9C%94%20Updated%20For%20Version%20-%20Node%2020.10.0-yellow.svg" alt="Updated for Node 20.10.0"/>
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Welcome!
+
+This is a responsive PC rent app, created using:
+- backend - node.js, mySQL nginx
+- frontned - react vite, tailwind, css
+
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your machine:
+
+- Node.js: [Download here](https://nodejs.org/)
+- npm (Node Package Manager): Comes with Node.js installation
+- mySQL
+- nginx
+
+###  Installed dependencies
+
+- backend:
+`npm install --save mysql2`
+`npm i express`
+`npm i express-session`
+`npm i express-mysql-session`
+
+- frontend:
+`npm install`
+`npm install react-router-dom localforage match-sorter sort-by`
+tailwind
 
 
-backend  (nodejs) install: 
-- npm install --save mysql2
-- npm i express
-- npm i express-session
-- npm i express-mysql-session
-
-frontend (vite) install:
-- npm install
-- npm install react-router-dom localforage match-sorter sort-by
-- tailwind
-
-nginx
+### Viewing the App
+Once the dependencies are installed, you can start the development server and run the app:  frontend - `npm run dev` backend `node index` or if installed `nodemon`
 
 
-🔹 Preview -  <a href="https://simonakom.github.io/pc-rent-platform/frontend/dist/index.html" style="font-size:small;">View</a><h4>
- 
+### License
+This project is licensed under the MIT License - see the LICENSE file for details. Intention is that you can use everything in this project as a starting point or as a bits and pieces in your own project.
+
+
+
+<div style="text-align: center;">
+  <img src="./frontend/src/assets/pagelogin.png" alt="48 items" style="border-radius: 10px; display: inline-block;" />
+    <img src="./frontend/src/assets/pageregister.png" alt="48 items" style="border-radius: 10px; display: inline-block;" />
+      <img src="./frontend/src/assets/pagemain.png" alt="48 items" style="border-radius: 10px; display: inline-block;" />
+        <img src="./frontend/src/assets/pagenotfound.png" alt="48 items" style="border-radius: 10px; display: inline-block;" />
+</div>
+
+
+
