@@ -20,3 +20,7 @@ frontend (vite) install:
 - tailwind
 
 nginx
+
+
+🔹 Preview -  <a href="https://simonakom.github.io/pc-rent-platform/dist/index.html" style="font-size:small;">View</a><h4>
+ 
