@@ -1,4 +1,5 @@
 import clickImage from '../assets/screen.png'; 
+import { Link } from "react-router-dom";
 export default function NotFound() {
 	return (
         <div className="min-h-screen flex justify-center items-center not-found-bg py-10 px-6 overflow-hidden">
@@ -23,7 +24,11 @@ export default function NotFound() {
                     We&apos;re here to help you navigate and find exactly what you need.
                 </p>
                 <div className="my-8 flex flex-col justify-center items-center">
-                    <a href="/" className="bg-[#60346b] hover:bg-purple-800 px-4 py-2 rounded-lg text-lg md:text-xl whitespace-nowrap">Go Home</a>
+                    <Link
+                         to="/" 
+                         className="bg-[#60346b] hover:bg-purple-800 px-4 py-2 rounded-lg text-lg md:text-xl whitespace-nowrap">
+                        Go Home
+                    </Link>
                     <img className="w-[60px] mt-5" src={clickImage} alt="click" />
                 </div>
             </div>

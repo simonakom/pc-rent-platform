@@ -29,6 +29,7 @@ module.exports = class User {
                 [this.username, this.passEncoded, this.email, this.birthDate, this.phone, this.addressId, this.salt]);
             console.log(result);
             this.#id = result[0].insertId;
+            return result;
         }
 
         static async findAll() {
@@ -68,6 +69,24 @@ module.exports = class User {
                 result.id
             );
         }
+
+        static async findByUsername(username) {
+		const results = await executeQuery(`SELECT * FROM users WHERE username = ?`,[username]);
+		if (results[0].length === 0) return null;
+		const user = results[0][0];
+		return new User(
+			{
+				username: user.username,
+				passEncoded: user.pass_encoded,
+				email: user.email,
+				birthDate: user.birth_date,
+				phone: user.phone,
+				addressId: user.address_id,
+				salt: user.salt,
+			},
+			user.id
+		);
+	}
 
         static async deleteById(id) {
             const result = await executeQuery(`DELETE FROM users WHERE id=?`, [id]);

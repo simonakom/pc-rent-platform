@@ -1,33 +1,35 @@
 import clickImage from '../assets/screen.png'; 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { getAllCountries } from "/utils/api/countriesApi";
 import { register } from "../../utils/api/registerService";
-import { checkSession } from "../../utils/api/checkSession";
+import { checkSession } from "../../utils/api/sessions";
 import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../../src/ErrorMessage/ErrorMessage";
 
 export default function RegistrationWindow(){
-    const [userDetails, setUserDetails] = useState({
+    const [countries, setCountries] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(""); 
+
+   const userDetailsRef = useRef({
         username: "",
         password: "",
         email: "",
         birthDate: "",
         phone: "",
     });
-    const [addressDetails, setAddressDetails] = useState({
+
+    const addressDetailsRef = useRef({
         country: "",
         county: "",
-        municipality:"",
-        zipCode:"",
-        city:"",
-        street:"",
-        streetNumber:"",
-        apartmentNumber:"",
+        municipality: "",
+        zipCode: "",
+        city: "",
+        street: "",
+        streetNumber: "",
+        apartmentNumber: "",
     });
 
-    const [countries, setCountries] = useState([]);
-
     const navigate = useNavigate();
-
 	useEffect(() => {
 		getAllCountries((data) => {
 			setCountries(data);
@@ -36,7 +38,7 @@ export default function RegistrationWindow(){
 			if (data.isLoggedIn) {
 				navigate("/");
 			} else {
-				console.log("user not logged in");
+				console.log("user not registered");
 			}
 		});
 	}, [navigate]);
@@ -45,17 +47,43 @@ export default function RegistrationWindow(){
 		return countries.sort((a, b) => a.country.localeCompare(b.country));
 	}, [countries]);
 
-    function setFieldInUserDetails(e, field){
-        const newObject = {...userDetails};
-        newObject[field] = e.target.value;
-        setUserDetails(newObject);
+    function sendRegistrationDetails(e) {
+        e.preventDefault();
+
+        //validations:
+        const username = userDetailsRef.current.username;
+        if (username.length < 5 || username.length > 20) {
+            setErrorMessage("Username must be between 5 and 30 characters.");
+            return; 
+        }
+        const password = userDetailsRef.current.password;
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{5,30}$/;
+        if (!passwordRegex.test(password)) {
+            alert("Password must be between 5 and 30 characters and contain at least one capital letter and one symbol.");
+            return; 
+        }
+        const email = userDetailsRef.current.email;
+        if (email.length < 4 || email.length > 30) {
+            alert("Email must be between 4 and 30 characters.");
+            return; 
+        }
+
+        // Clear error message if all validations pass
+        setErrorMessage("");
+
+        const registrationDetails = { ...userDetailsRef.current, ...addressDetailsRef.current };
+        register(registrationDetails);
+        console.log(registrationDetails);
+        
+        navigate("/");
     }
-	function sendRegistrationDetails() {
-		const registrationDetails = { ...userDetails, ...addressDetails };
-		register(registrationDetails);
-		console.log(registrationDetails);
-	}
-    
+
+    const handleCloseError = () => {
+        setErrorMessage(""); 
+    };
+
+    console.log("component reredered");
+ 
     return (
         <div className="register-bg flex flex-col justify-center items-center overflow-y-scroll pt-10 pb-16 px-5">
             <div className="flex items-center gap-2 my-16 bg-[#adaaaa1e] rounded-full px-10 py-2">
@@ -66,12 +94,15 @@ export default function RegistrationWindow(){
                 <h1 className="text-xl sm:text-2xl font-medium mb-2 text-[white]">Personal details</h1>
                 <hr className="mb-5 border-t-1 border-gray-500" />
                 <form>
+                    {errorMessage && <ErrorMessage message={errorMessage} onClose={handleCloseError} />}
                     <div className="mb-2">
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Username:</span>
                             <input 
-                                value={userDetails.username}
-                                onChange={(e)=>setFieldInUserDetails(e, "username")}
+                                // value={userDetailsRef.current.username}
+                                onChange={(e) => {
+                                    userDetailsRef.current.username = e.target.value;
+                                }}
                                 type="text"
                                 placeholder="Enter your username..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -81,8 +112,10 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Password:</span>
                             <input 
-                                value={userDetails.password}
-                                onChange={(e)=>setFieldInUserDetails(e, "password")}
+                                // value={userDetailsRef.current.password}
+                                onChange={(e) => {
+                                    userDetailsRef.current.password = e.target.value;
+                                }}
                                 type="password" 
                                 placeholder="Enter your password..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -92,8 +125,10 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Email:</span>
                             <input 
-                                value={userDetails.email}
-                                onChange={(e)=>setFieldInUserDetails(e, "email")}
+                                // value={userDetailsRef.current.email}
+                                onChange={(e) => {
+                                    userDetailsRef.current.email = e.target.value;
+                                }}
                                 type="email" 
                                 placeholder="Enter your email..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -103,8 +138,10 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Birth date:</span>
                             <input 
-                                value={userDetails.birthDate}
-                                onChange={(e)=>setFieldInUserDetails(e, "birthDate")}
+                                //  value={userDetailsRef.current.birthDate}
+                                 onChange={(e) => {
+                                     userDetailsRef.current.birthDate = e.target.value;
+                                 }}
                                 type="date" 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                         </label>
@@ -113,8 +150,10 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Phone:</span>
                             <input 
-                                value={userDetails.phone}
-                                onChange={(e)=>setFieldInUserDetails(e, "phone")}
+                                //  value={userDetailsRef.current.phone}
+                                 onChange={(e) => {
+                                     userDetailsRef.current.phone = e.target.value;
+                                 }}
                                 type="number" 
                                 placeholder="Enter your phone number..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -127,19 +166,15 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Country:</span>
                             <select 
+                                // value={addressDetailsRef.current.country}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"
-                                value={addressDetails.country}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										country: e.target.value,
-									})
-								}>
-                                    {sortedCountries.map((country) => (
-                                        <option key={`country-${country.id}`}>
-                                             {country.country}
-                                        </option>
-                                    ))}
+                                onChange={(e) => addressDetailsRef.current.country = e.target.value}
+							>
+                                {sortedCountries.map((country) => (
+                                    <option key={`country-${country.id}`}>
+                                            {country.country}
+                                    </option>
+                                ))}
                             </select>
                         </label>
                     </div>
@@ -147,13 +182,8 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">County:</span>
                             <input 
-                                value={addressDetails.county}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										county: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.county}
+                                onChange={(e) => addressDetailsRef.current.county = e.target.value}
                                 type="text" 
                                 placeholder="Enter your County..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"/>
@@ -163,13 +193,8 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Municipality:</span>
                             <input 
-                                value={addressDetails.municipality}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										municipality: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.municipality}
+                                onChange={(e) => addressDetailsRef.current.municipality = e.target.value}
                                 type="text" 
                                 placeholder="Enter your municipality..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -179,13 +204,8 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Postal Code:</span>
                             <input 
-                                value={addressDetails.zipCode}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										zipCode: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.zipCode}
+                                onChange={(e) => addressDetailsRef.current.zipCode = e.target.value}
                                 type="text"
                                 placeholder="Enter your postal code..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -195,13 +215,8 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">City:</span>
                             <input 
-                                value={addressDetails.city}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										city: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.city}
+                                onChange={(e) => addressDetailsRef.current.city = e.target.value}
                                 type="text" 
                                 placeholder="Enter your city..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -211,13 +226,8 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Street:</span>
                             <input 
-                                value={addressDetails.street}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										street: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.street}
+                                onChange={(e) => addressDetailsRef.current.street = e.target.value}
                                 type="text" 
                                 placeholder="Enter your street..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
@@ -227,25 +237,15 @@ export default function RegistrationWindow(){
                         <label className="flex flex-col sm:flex-row items-center gap-1">
                             <span className="w-full sm:w-2/3 mb-2 sm:mb-0">Street number:</span>
                             <input 
-                                value={addressDetails.streetNumber}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										streetNumber: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.streetNumber}
+                                onChange={(e) => addressDetailsRef.current.streetNumber = e.target.value}
                                 type="text"  
                                 placeholder="Street number..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                             <span className="mr-3"></span>
                             <input 
-                                value={addressDetails.apartmentNumber}
-                                onChange={(e) =>
-									setAddressDetails({
-										...addressDetails,
-										apartmentNumber: e.target.value,
-									})
-								}
+                                // value={addressDetailsRef.current.apartmentNumber}
+                                onChange={(e) => addressDetailsRef.current.apartmentNumber = e.target.value}
                                 type="text" 
                                 placeholder="Apartment number..." 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
