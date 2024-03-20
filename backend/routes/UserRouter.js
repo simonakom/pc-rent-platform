@@ -24,6 +24,8 @@ router.post("/register", async (req, res) => {
 			apartmentNumber,
 		} = req.body;
 
+		console.log(req.body);
+
 		const newAddress = new Address({
 			country,
 			county,
@@ -62,15 +64,15 @@ router.post("/register", async (req, res) => {
 
 		res.status(201).send({
 			user: newUser.getInstance(),
-			address: newAddress.getInstance(),
+			address: newAddress.getInstance(), status:true,
 		});
 	} catch (err) {
 		console.error(err);
 		Address.deleteById(currentAddressId);
 		if (err.errno === 1062) {
-			res.status(400).json({ message: "Data is not unique" });
+			res.status(400).json({ message: "Data is not unique",status:false});
 		} else {
-			res.status(500).json({ message: "Server error" });
+			res.status(500).json({ message: "Server error", status:false});
 		}
 	}
 });
@@ -84,7 +86,7 @@ router.post("/login", async (req, res) => {
 					message: "Please provide full login information",
 					status: false,
 				});
-		const existingUser = await User.findByUsername(username);
+		const existingUser = await UserModel.findByUsername(username);
 		if (!existingUser)
 			return res.status(404).json({
 					message: "User with this name could not be found",

@@ -29,10 +29,15 @@ export default function RegistrationWindow(){
         apartmentNumber: "",
     });
 
+    const countryInput = useRef(null)
+
+
     const navigate = useNavigate();
 	useEffect(() => {
 		getAllCountries((data) => {
 			setCountries(data);
+            addressDetailsRef.current.country = data[0].country;
+            countryInput.current.value = data[0].country;
 		});
         checkSession((data) => {
 			if (data.isLoggedIn) {
@@ -51,31 +56,31 @@ export default function RegistrationWindow(){
         e.preventDefault();
 
         //validations:
-        const username = userDetailsRef.current.username;
-        if (username.length < 5 || username.length > 20) {
-            setErrorMessage("Username must be between 5 and 30 characters.");
-            return; 
-        }
-        const password = userDetailsRef.current.password;
-        const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{5,30}$/;
-        if (!passwordRegex.test(password)) {
-            alert("Password must be between 5 and 30 characters and contain at least one capital letter and one symbol.");
-            return; 
-        }
-        const email = userDetailsRef.current.email;
-        if (email.length < 4 || email.length > 30) {
-            alert("Email must be between 4 and 30 characters.");
-            return; 
-        }
+        // const username = userDetailsRef.current.username;
+        // if (username.length < 5 || username.length > 20) {
+        //     setErrorMessage("Username must be between 5 and 30 characters.");
+        //     return; 
+        // }
+        // const password = userDetailsRef.current.password;
+        // const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{5,30}$/;
+        // if (!passwordRegex.test(password)) {
+        //     alert("Password must be between 5 and 30 characters and contain at least one capital letter and one symbol.");
+        //     return; 
+        // }
+        // const email = userDetailsRef.current.email;
+        // if (email.length < 4 || email.length > 30) {
+        //     alert("Email must be between 4 and 30 characters.");
+        //     return; 
+        // }
 
         // Clear error message if all validations pass
         setErrorMessage("");
 
         const registrationDetails = { ...userDetailsRef.current, ...addressDetailsRef.current };
-        register(registrationDetails);
+        register(registrationDetails, (response)=>{
+            if (response.status) navigate("/");
+        });
         console.log(registrationDetails);
-        
-        navigate("/");
     }
 
     const handleCloseError = () => {
@@ -167,6 +172,7 @@ export default function RegistrationWindow(){
                             <span className="w-full sm:w-1/5 mb-2 sm:mb-0">Country:</span>
                             <select 
                                 // value={addressDetailsRef.current.country}
+                                ref = {countryInput}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"
                                 onChange={(e) => addressDetailsRef.current.country = e.target.value}
 							>

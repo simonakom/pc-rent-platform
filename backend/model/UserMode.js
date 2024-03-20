@@ -32,26 +32,25 @@ module.exports = class User {
             return result;
         }
 
-        static async findAll() {
-            const results = await executeQuery(`SELECT * FROM users`)
-            console.log(results);
-            const result = results[0].map
-                (userObj => 
-                    new User(
-                        {
-                            username: userObj.username,
-                            passEncoded: userObj.pass_encoded,
-                            email: userObj.email,
-                            birthDate: userObj.birth_date,
-                            phone: userObj.phone,
-                            addressId: userObj.address_id,
-                            salt: userObj.salt
-                        },
-                        userObj.id
-                        )
-                    );
-            return result;
-            }
+         static async findAll() {
+    const results = await executeStatement(`SELECT * FROM users`);
+    const result = results[0].map(
+      (userObj) =>
+        new User(
+          {
+            username: userObj.username,
+            pass_encoded: userObj.pass_encoded,
+            email: userObj.email,
+            birth_date: userObj.birth_date,
+            phone: userObj.phone,
+            address_id: userObj.address_id,
+            salt: userObj.salt,
+          },
+          userObj.id
+        )
+    );
+    return result;
+  }
 
         static async findById(id) { 
             const results = await executeQuery(`SELECT * FROM users WHERE id=?`, [id,]);
