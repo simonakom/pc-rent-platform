@@ -11,4 +11,4 @@ export async function register(registerData, callback) {
 	const result = await promise.json();
 	callback(result)
 	console.log(result);
-}
+} 

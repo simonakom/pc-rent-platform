@@ -37,7 +37,9 @@ export default function LoginPage() {
                 <h1 className="text-4xl text-[#ffffff]">Login</h1>
             </div>
 		<div className="w-full sm:max-w-[500px] bg-[#1d1c1cd4] pb-12 pt-6 px-8 rounded-xl">
-        <p className="bg-[#e1574a7e] text-[#ffe7e7] text-center rounded-2xl my-5">{message}</p>
+            {message && (
+                <p className="bg-[#df595959] text-[#ffe7e7] text-center rounded-2xl my-5 py-1">{message}</p>
+            )}
             <form className='overflow-hidden text-white'>
                 <div className="mb-3">
                     <label className="flex flex-col sm:flex-row items-center">

@@ -6,7 +6,7 @@ export default function ErrorMessage({ message, onClose }) {
     };
 
     return (
-        <div className="bg-[#e1574a7e] text-[#ffe7e7] px-4 py-2 rounded-2xl my-5" onClick={handleClick}>
+        <div className="bg-[#df595959] text-[#ffe7e7] text-center rounded-2xl my-5 py-1" onClick={handleClick}>
             {message}
         </div>
     );

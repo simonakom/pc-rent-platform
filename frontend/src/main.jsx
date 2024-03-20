@@ -6,6 +6,7 @@ import RegistrationWindow from "./Registration/Register";
 import LoginPage from "./Login/Login";
 import NotFound from "./not-found/NotFound"
 import Main from "./Main/Main";
+import AddPcForm from "./AddPc/AddPcForm";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/add-new-pc",
+    element: <AddPcForm />,
   },
   {
     path: "*",

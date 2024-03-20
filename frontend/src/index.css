@@ -23,3 +23,10 @@
     background-size: cover;
     background-position: center;
 }
+
+.add-pc-bg {
+    background-image: url(./assets/bg-addpc.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh; 
+}

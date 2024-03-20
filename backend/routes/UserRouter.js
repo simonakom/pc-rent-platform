@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
 			apartmentNumber,
 		} = req.body;
 
-		console.log(req.body);
+		// console.log(req.body);
 
 		const newAddress = new Address({
 			country,
@@ -36,9 +36,9 @@ router.post("/register", async (req, res) => {
 			streetNumber,
 			apartmentNumber,
 		});
+
 		console.log(newAddress);
 		await newAddress.save();
-
 		currentAddressId = newAddress.id;
 
 		const salt = security.generateSalt();
@@ -62,18 +62,24 @@ router.post("/register", async (req, res) => {
 		};
 		req.session.isLoggedIn = true;
 
+		currentAddressId = undefined;
+
 		res.status(201).send({
 			user: newUser.getInstance(),
-			address: newAddress.getInstance(), status:true,
+			address: newAddress.getInstance(), 
+			status:true,
 		});
 	} catch (err) {
 		console.error(err);
-		Address.deleteById(currentAddressId);
-		if (err.errno === 1062) {
-			res.status(400).json({ message: "Data is not unique",status:false});
-		} else {
-			res.status(500).json({ message: "Server error", status:false});
+		if(currentAddressId){
+			await Address.deleteById(currentAddressId);
+			currentAddressId = undefined;
 		}
+		if (err.errno === 1062) {
+			res.status(400).json({ message: "User with povided details already exists",status:false});
+		} else {
+			res.status(500).json({ message: "Something went wrong...", status:false});
+		}  
 	}
 });
 
@@ -83,7 +89,7 @@ router.post("/login", async (req, res) => {
 		const { username, password } = req.body;
 		if (!username || !password)
 			return res.status(400).json({
-					message: "Please provide full login information",
+					message: "Please, fill all fields",
 					status: false,
 				});
 		const existingUser = await UserModel.findByUsername(username);
@@ -95,7 +101,7 @@ router.post("/login", async (req, res) => {
 
 		if (!security.isValidPassword(password,existingUser.salt,existingUser.passEncoded))
 			return res.status(400).json({
-					message: "Login details are invalid",
+					message: "Password is incorrect",
 					status: false,
 				});
 		req.session.user = {
