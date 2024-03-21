@@ -1,15 +1,20 @@
 import clickImage from '../assets/screen.png'; 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { savePc } from "../../utils/api/pcService";
+import ErrorMessage from "../../src/ErrorMessage/ErrorMessage";
+import { useNavigate } from "react-router-dom";
 
 export default function AddPcForm(){
+  const [errorMessage, setErrorMessage] = useState(""); 
+  const navigate = useNavigate();
     console.log("Component rerenders");
 
     const cpuInputRef = useRef(null);
     const gpuInputRef = useRef(null);
-    const computerTypeInputRef = useRef(null);
     const ramTypeInputRef = useRef(null);
     const ramSpeedInputRef = useRef(null);
     const ramAmountInputRef = useRef(null);
+    const computerTypeInputRef = useRef(null);
 
 
     useEffect(() => {
@@ -53,24 +58,58 @@ export default function AddPcForm(){
 
     function registerNewPc(e){
         e.preventDefault();
+        if (e.pageX === 0 && e.pageY === 0) return 
         const newPcObject = {
             cpu: cpuInputRef.current.value,
             gpu: gpuInputRef.current.value,
-            ramType: ramAmountInputRef.current.value,
+            ramType: ramTypeInputRef.current.value,
             ramSpeed: ramSpeedInputRef.current.value,
             ramAmount: ramAmountInputRef.current.value,
             pcType: computerTypeInputRef.current.value,
           };
           console.log(newPcObject);
-    }
-    const handleEnterKeyForSelect = (e, selectRef, buttonRef) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          selectRef.current.size = selectRef.current.length; 
-          selectRef.current.focus();
-          buttonRef.current.focus(); 
+
+          // validations:
+          const cpu = cpuInputRef.current.value;
+          if (cpu.length < 5 || cpu.length > 20) {
+              setErrorMessage("CPU must be between 5 and 20 characters.");
+              return; 
+          }
+          if (
+            !cpuInputRef.current.value ||
+            !gpuInputRef.current.value ||
+            !computerTypeInputRef.current.value ||
+            !ramTypeInputRef.current.value ||
+            !ramSpeedInputRef.current.value ||
+            !ramAmountInputRef.current.value
+        ) {
+            setErrorMessage("Please, fill all fields");
+            return;
         }
-      };
+
+          savePc(newPcObject, (result)=>{
+            if(result.status) navigate("/");
+            else {
+              setErrorMessage("Addition to database was unsuccessful");
+            }
+          })
+    }
+
+    const handleCloseError = () => {
+      setErrorMessage(""); 
+  };
+
+    const handleEnterKeyForSelect = (e, selectRef) => {
+      if (e.key === "Enter" && selectRef && selectRef.current) {
+          e.preventDefault();
+          const options = selectRef.current.getElementsByTagName('option');
+          const optionsLength = options.length;
+          if (optionsLength > 0) {
+              selectRef.current.size = optionsLength;
+              selectRef.current.focus();
+          }
+      }
+    };
 
     return (
         <div className="add-pc-bg flex flex-col items-center overflow-y-scroll pt-10">
@@ -85,7 +124,7 @@ export default function AddPcForm(){
                 <h1 className="text-xl sm:text-2xl font-medium mb-2 text-[white]">PC details</h1>
                 <hr className="mb-5 border-t-1 border-gray-500" />
                 <form>
-                    {/* {errorMessage && <ErrorMessage message={errorMessage} onClose={handleCloseError} />} */}
+                    {errorMessage && <ErrorMessage message={errorMessage} onClose={handleCloseError} />}
                     <div className="mb-2">
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">Processor:</span>
@@ -156,7 +195,7 @@ export default function AddPcForm(){
                                 ref={ramAmountInputRef}
                                 type="number" 
                                 placeholder="Enter RAM (Mhz)..." 
-                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef)}
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef, null)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                         </label>
                     </div>

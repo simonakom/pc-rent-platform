@@ -39,15 +39,15 @@ module.exports = class PC {
 				this.pcType,
 			]
 		);
-		this.#id = result.insertId;
+		this.#id = result[0].insertId;
 		return result;
 	}
 	
     static async findAll() {
         const results = await executeQuery(`SELECT * FROM pc`)
         console.log(results);
-        const result = results[0].map
-            (pcObj => 
+        return results[0].map(
+            (pcObj) => 
                 new PC(
                     {
 						ownerId: pcObj.owner_id, 
@@ -61,7 +61,6 @@ module.exports = class PC {
                     pcObj.id
                     )
                 );
-        return result;
         }
 
 	static async findById(id) { 

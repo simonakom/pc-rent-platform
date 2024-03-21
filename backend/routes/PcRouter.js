@@ -2,40 +2,50 @@ const express = require("express");
 const router = express.Router();
 const PcModel = require ("../model/PcModel")
 
-//Add to database
-router.post("/", async (req, res) => {
-	try{ 
-		const {ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
-		console.log(ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType);
 
-		const newPc = new PcModel({ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType});
-		await newPc.save();
-		console.log(newPc.getInstance());
-		res.send(newPc.getInstance());
-	}catch(err){
-		console.error(err);
-		if(err.errno === 1062)
-		res.status(400).send("Adding not possible. Pc already exist");
-	else {
-		res.status(500).send("Server error")
-		}
-	}
+ //Add to database
+router.post("/", async (req, res) => {
+try{
+    const { cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
+    console.log(req.body)
+
+    const newPc = new PcModel
+    ({ ownerId: req.session.id,
+        cpu,
+        gpu, 
+        ramType, 
+        ramSpeed, 
+        ramAmount, 
+        pcType
+    });
+    await newPc.save();
+    res.status(201).json({
+        message: "Information successfully saved to the database",
+        newPc: newPc.getInstance(),
+		status: true,
+    });
+}
+catch(err) {
+	return res.status(500).json({
+		message: "Internal server error",
+        status: false,
+    });
+}
 });
 
-//Get all pc
+// //Get all pc
 router.get("/", async (req, res) => {
-	const allCountriesWithoutId = await PcModel.findAll()
-	const allCountries = allCountriesWithoutId.map((value) => value.getInstance());
-	res.send(allCountries)
+	const allPc = await PcModel.findAll()
+	res.status(200).json(allPc.map(pcObjs => pcObjs.getInstance()));
 	})
 
-//Get all pc by id
+// //Get all pc by id
 router.get("/:id", async (req, res) => {
 	const pc = await PcModel.findById(req.params.id);
 	res.send(pc.getInstance());
 });
 
-//Delete
+// //Delete
 router.delete("/:id", async (req, res) => {
 	try{
 	const result = await PcModel.deleteById(req.params.id);
@@ -46,7 +56,7 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
-//Update
+// //Update
 router.put("/:id", async (req, res) => {
 	const {ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
 	const pcObj = await PcModel.findById(req.params.id);
@@ -71,3 +81,5 @@ router.put("/:id", async (req, res) => {
 
 
 module.exports = router;
+
+

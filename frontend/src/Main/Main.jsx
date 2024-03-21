@@ -2,6 +2,8 @@ import clickImage from '../assets/screen.png';
 import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
 import { Link, useNavigate } from "react-router-dom";
+import { getAllPcs } from "../../utils/api/pcService";
+import * as PropTypes from "prop-types";
 
 
 function AuthButtons() {
@@ -26,53 +28,53 @@ function AuthButtons() {
 	);
   }
 
-function PcPost() {
+function PcPost({pc}) {
 	return (
-		<div className="flex justify-center items-center pb-7">
-			<div className="bg-slate-300 min-h-[300px] min-w-[100px] max-w-[250px]">
+		<div className="flex justify-center items-center pb-7 ">
+			<div className="bg-slate-300 min-h-[390px] min-w-[100px] max-w-[350px] max-h-[390px] hover:bg-[#606060f8] hover:text-[white]">
 				<div className="img">
 					<img src="https://cdn.mos.cms.futurecdn.net/n8Lzn5As39dfVhwVt7cRb9-1200-80.jpeg" className="w-full"/>
 				</div>
-				<div className="details p-4 w-fit mx-auto">
+				<div className="details py-5 mx-6">
 					<a href="/pc1">
-						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">PC title</h3>
+						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcType}</h3>
 					</a>
 					<div className="text-xs">
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								CPU
 							</span>
-							<span>content content</span>
+							<span>{pc.cpu}</span>
 						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								GPU:
 							</span>
-							<span>content content</span>
+							<span>{pc.gpu}</span>
 						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								Pc type:
 							</span>
-							<span>content content</span>
+							<span>{pc.pcType}</span>						
 						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								Ram type:
 							</span>
-							<span>content content</span>
+							<span>{pc.ramType}</span>						
 						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								Ram speed:
 							</span>
-							<span>content content</span>
+							<span>{pc.ramSpeed}</span>						
 						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-1/3 font-bold">
-								Specification:
+							<span className="inline-block w-2/5 font-bold">
+								Ram amount:
 							</span>
-							<span>content content</span>
+							<span>{pc.ramAmount}</span>						
 						</div>
 					</div>
 				</div>
@@ -82,8 +84,10 @@ function PcPost() {
 }
 
 export default function Main() {
+	const [pcList, setPcList] = useState([]);
 	const navigate = useNavigate();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	
 	useEffect(() => {
 		checkSession((data) => {
 			setIsLoggedIn(data.isLoggedIn);
@@ -91,8 +95,13 @@ export default function Main() {
 			// 	navigate("/login");
 			// }
 		});
+		
+		getAllPcs((allPcs)=>{
+			setPcList(allPcs);
+			// console.log(allPcs);
+		});
 	}, [navigate]);
-	// const isLoggedIn = true;
+
 
 	function logOut() {
 		logout((response) => {
@@ -129,17 +138,15 @@ export default function Main() {
 			)}
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-8 mx-10">
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
-				<PcPost />
+				{pcList.map((pc) => (
+					<PcPost pc={pc} key={pc.id}/>
+					))}
 			</div>
 		</div>
 		</div>
 	);
 }
+
+PcPost.propTypes = {
+	pc: PropTypes.object.isRequired,
+  };
