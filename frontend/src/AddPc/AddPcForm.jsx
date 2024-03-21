@@ -68,7 +68,7 @@ export default function AddPcForm(){
           e.preventDefault();
           selectRef.current.size = selectRef.current.length; 
           selectRef.current.focus();
-          buttonRef.current.focus(); // Focus on the button
+          buttonRef.current.focus(); 
         }
       };
 
