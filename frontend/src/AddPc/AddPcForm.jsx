@@ -6,10 +6,11 @@ export default function AddPcForm(){
 
     const cpuInputRef = useRef(null);
     const gpuInputRef = useRef(null);
+    const computerTypeInputRef = useRef(null);
     const ramTypeInputRef = useRef(null);
     const ramSpeedInputRef = useRef(null);
     const ramAmountInputRef = useRef(null);
-    const computerTypeInputRef = useRef(null);
+
 
     useEffect(() => {
         cpuInputRef.current.focus();
@@ -21,9 +22,15 @@ export default function AddPcForm(){
         gpuInputRef.current.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
               e.preventDefault();
-              ramTypeInputRef.current.focus();
+              computerTypeInputRef.current.focus();
             }
           });
+          computerTypeInputRef.current.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                ramTypeInputRef.current.focus();
+              }
+            });
           ramTypeInputRef.current.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -37,12 +44,6 @@ export default function AddPcForm(){
             }
           });
           ramAmountInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              computerTypeInputRef.current.focus();
-            }
-          });
-          computerTypeInputRef.current.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
               e.preventDefault();
               registerNewPc(e);
@@ -62,6 +63,14 @@ export default function AddPcForm(){
           };
           console.log(newPcObject);
     }
+    const handleEnterKeyForSelect = (e, selectRef, buttonRef) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          selectRef.current.size = selectRef.current.length; 
+          selectRef.current.focus();
+          buttonRef.current.focus(); // Focus on the button
+        }
+      };
 
     return (
         <div className="add-pc-bg flex flex-col items-center overflow-y-scroll pt-10">
@@ -84,6 +93,7 @@ export default function AddPcForm(){
                                 ref={cpuInputRef}
                                 type="text"
                                 placeholder="Enter CPU..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, gpuInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                         </label>
                     </div>
@@ -94,7 +104,22 @@ export default function AddPcForm(){
                                 ref={gpuInputRef}
                                 type="text" 
                                 placeholder="Enter GPU..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, computerTypeInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
+                        </label>
+                    </div>
+                    <div className="mb-2">
+                        <label className="flex flex-col sm:flex-row items-center">
+                            <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">PC type:</span>
+                            <select 
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"
+                                ref={computerTypeInputRef}
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramTypeInputRef)}
+                                >
+                                <option>Macbook</option>
+                                <option>Laptop</option>
+                                <option>Desktop Computer</option>
+                            </select>
                         </label>
                     </div>
                     <div className="mb-2">
@@ -102,7 +127,9 @@ export default function AddPcForm(){
                             <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">RAM type:</span>
                             <select 
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"     
-                                ref={ramTypeInputRef}>
+                                ref={ramTypeInputRef}
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramSpeedInputRef)}
+                                >
                                 <option>DDR</option>
                                 <option>DDR2</option>
                                 <option>DDR3</option>
@@ -118,6 +145,7 @@ export default function AddPcForm(){
                                 ref={ramSpeedInputRef}
                                 type="number" 
                                 placeholder="Enter RAM (Mhz)..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                         </label>
                     </div>
@@ -128,19 +156,8 @@ export default function AddPcForm(){
                                 ref={ramAmountInputRef}
                                 type="number" 
                                 placeholder="Enter RAM (Mhz)..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
-                        </label>
-                    </div>
-                    <div className="mb-2">
-                        <label className="flex flex-col sm:flex-row items-center">
-                            <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">PC type:</span>
-                            <select 
-                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]"
-                                ref={computerTypeInputRef}>
-                                <option>Macbook</option>
-                                <option>Laptop</option>
-                                <option>Desktop Computer</option>
-                            </select>
                         </label>
                     </div>
                         <div className="flex flex-col items-center justify-center">
