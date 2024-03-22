@@ -9,57 +9,85 @@ export default function AddPcForm(){
   const navigate = useNavigate();
     console.log("Component rerenders");
 
+    const pcNameInputRef = useRef(null);
     const cpuInputRef = useRef(null);
     const gpuInputRef = useRef(null);
+    const computerTypeInputRef = useRef(null);
     const ramTypeInputRef = useRef(null);
     const ramSpeedInputRef = useRef(null);
     const ramAmountInputRef = useRef(null);
-    const computerTypeInputRef = useRef(null);
 
 
     useEffect(() => {
-        cpuInputRef.current.focus();
-        cpuInputRef.current.addEventListener("keydown", (e) => {
+      pcNameInputRef.current.focus();
+
+      const focusCPU = (e) => {
+        if (e.key === "Enter") {
+          cpuInputRef.current.focus();
+        }
+    };
+    pcNameInputRef.current?.addEventListener("keydown", focusCPU);
+
+  
+      const focusGPU = (e) => {
           if (e.key === "Enter") {
-            gpuInputRef.current.focus();
+              gpuInputRef.current.focus();
           }
-        });
-        gpuInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              computerTypeInputRef.current.focus();
-            }
-          });
-          computerTypeInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                ramTypeInputRef.current.focus();
-              }
-            });
-          ramTypeInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
+      };
+      cpuInputRef.current?.addEventListener("keydown", focusGPU);
+
+      const focusPcType = (e) => {
+        if (e.key === "Enter") {
+            computerTypeInputRef.current.focus();
+        }
+      };
+      gpuInputRef.current?.addEventListener("keydown", focusPcType);
+
+    const focusRamType = (e) => {
+        if (e.key === "Enter") {
+            ramTypeInputRef.current.focus();
+        }
+      };
+      computerTypeInputRef.current?.addEventListener("keydown", focusRamType);
+
+    const focusRamSpeed = (e) => {
+          if (e.key === "Enter") {
               ramSpeedInputRef.current.focus();
-            }
-          });
-          ramSpeedInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              ramAmountInputRef.current.focus();
-            }
-          });
-          ramAmountInputRef.current.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              registerNewPc(e);
-            }
-          });
-        }, []);
+          }
+      };
+      ramTypeInputRef.current?.addEventListener("keydown", focusRamSpeed);
+
+    const focusRamAmount = (e) => {
+        if (e.key === "Enter") {
+            ramAmountInputRef.current.focus();
+        }
+      };
+      ramSpeedInputRef.current?.addEventListener("keydown", focusRamAmount);
+
+    const send = (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          registerNewPc(e);
+        }
+      };
+      ramAmountInputRef.current?.addEventListener("keydown", send);
+
+  // Cleanup function to remove event listeners
+  return () => {
+    cpuInputRef.current?.removeEventListener("keydown", focusGPU);
+    gpuInputRef.current?.removeEventListener("keydown", focusPcType);
+    computerTypeInputRef.current?.removeEventListener("keydown", focusRamType);
+    ramTypeInputRef.current?.removeEventListener("keydown", focusRamSpeed);
+    ramSpeedInputRef.current?.removeEventListener("keydown", focusRamAmount);
+    ramAmountInputRef.current?.removeEventListener("keydown", send);
+};
+}, []);
 
     function registerNewPc(e){
         e.preventDefault();
         if (e.pageX === 0 && e.pageY === 0) return 
         const newPcObject = {
+            pcName: pcNameInputRef.current.value,
             cpu: cpuInputRef.current.value,
             gpu: gpuInputRef.current.value,
             ramType: ramTypeInputRef.current.value,
@@ -75,7 +103,8 @@ export default function AddPcForm(){
               setErrorMessage("CPU must be between 5 and 20 characters.");
               return; 
           }
-          if (
+          else if (
+            !pcNameInputRef.current.value ||
             !cpuInputRef.current.value ||
             !gpuInputRef.current.value ||
             !computerTypeInputRef.current.value ||
@@ -125,6 +154,17 @@ export default function AddPcForm(){
                 <hr className="mb-5 border-t-1 border-gray-500" />
                 <form>
                     {errorMessage && <ErrorMessage message={errorMessage} onClose={handleCloseError} />}
+                    <div className="mb-2">
+                        <label className="flex flex-col sm:flex-row items-center">
+                            <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">PC name:</span>
+                            <input 
+                                ref={pcNameInputRef}
+                                type="text"
+                                placeholder="Enter title..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, pcNameInputRef)}
+                                className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
+                        </label>
+                    </div>
                     <div className="mb-2">
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">Processor:</span>
@@ -194,15 +234,15 @@ export default function AddPcForm(){
                             <input 
                                 ref={ramAmountInputRef}
                                 type="number" 
-                                placeholder="Enter RAM (Mhz)..." 
-                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef, null)}
+                                placeholder="Enter RAM (GB)..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
                         </label>
                     </div>
                         <div className="flex flex-col items-center justify-center">
                         <button 
                             className="bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 mt-4"
-                            // onClick={e=>registerNewPc(e)}
+                            onClick={e=>registerNewPc(e)}
                             >Add new PC
                         </button>
                     </div>

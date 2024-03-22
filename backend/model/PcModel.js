@@ -2,6 +2,7 @@ const executeQuery = require("../mysql");
 
 module.exports = class PC {
 	#id; 
+	pcName;
 	ownerId;
 	cpu;
 	gpu;
@@ -11,11 +12,12 @@ module.exports = class PC {
 	pcType;
 
 	constructor(
-		{ ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType },
+		{ pcName, ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType },
 		id = null
 	) {
 		this.#id = id;
 		this.ownerId = ownerId;
+		this.pcName = pcName;
 		this.cpu = cpu;
 		this.gpu = gpu;
 		this.ramType = ramType;
@@ -28,8 +30,9 @@ module.exports = class PC {
 
 	async save() {
 		const result = await executeQuery(
-			`INSERT INTO pc (owner_id, cpu, gpu, ram_type, ram_speed, ram_amount, pc_type) VALUES (?, ?, ?, ?, ?, ?, ?);`,
+			`INSERT INTO pc (pc_name, owner_id, cpu, gpu, ram_type, ram_speed, ram_amount, pc_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
 			[
+				this.pcName,
 				this.ownerId,
 				this.cpu,
 				this.gpu,
@@ -50,6 +53,7 @@ module.exports = class PC {
             (pcObj) => 
                 new PC(
                     {
+						pcName:pcObj.pc_name, 
 						ownerId: pcObj.owner_id, 
 						cpu: pcObj.cpu, 
 						gpu: pcObj.gpu, 
@@ -68,6 +72,7 @@ module.exports = class PC {
 		console.log(results);
 		const result = results[0][0];
 		return new PC({
+					pcName: result.pc_name, 
 					ownerId: result.owner_id, 
 					cpu: result.cpu, 
 					gpu: result.gpu, 
@@ -90,8 +95,9 @@ module.exports = class PC {
     
     async update() {
 		const result = await executeQuery(
-			`UPDATE pc SET owner_id = ?, cpu = ?, gpu = ?, ram_type = ?, ram_speed = ?, ram_amount = ?, pc_type = ? WHERE id = ?`,
+			`UPDATE pc SET pc_name =?, owner_id = ?, cpu = ?, gpu = ?, ram_type = ?, ram_speed = ?, ram_amount = ?, pc_type = ? WHERE id = ?`,
 			[
+				this.pcName,
 				this.ownerId,
 				this.cpu,
 				this.gpu,

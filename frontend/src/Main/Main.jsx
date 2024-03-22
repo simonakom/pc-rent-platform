@@ -1,4 +1,7 @@
 import clickImage from '../assets/screen.png'; 
+import desktopImage from "/src/assets/pc-images/pc.jpg.webp";
+import laptopImage from "/src/assets/pc-images/laptop.webp";
+import macImage from "/src/assets/pc-images/macbook.jpg";
 import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,15 +32,34 @@ function AuthButtons() {
   }
 
 function PcPost({pc}) {
+	// console.log(pc);
+
+	function choosePcImage(pcType) {
+		// if (pcType === "Desktop Computer") {
+		// 	return desktopImage;
+		// }
+		switch (pcType) {
+			case "Desktop Computer":
+				return desktopImage;
+			case "Laptop":
+				return laptopImage;
+			case "Macbook":
+				return macImage;
+			default:
+				return "https://placehold.co/400x300";
+		}
+	}
+
+
 	return (
 		<div className="flex justify-center items-center pb-7 ">
 			<div className="bg-slate-300 min-h-[390px] min-w-[100px] max-w-[350px] max-h-[390px] hover:bg-[#606060f8] hover:text-[white]">
 				<div className="img">
-					<img src="https://cdn.mos.cms.futurecdn.net/n8Lzn5As39dfVhwVt7cRb9-1200-80.jpeg" className="w-full"/>
+					<img src={choosePcImage(pc.pcType)} className="w-full"/>
 				</div>
 				<div className="details py-5 mx-6">
 					<a href="/pc1">
-						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcType}</h3>
+						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcName}</h3>
 					</a>
 					<div className="text-xs">
 						<div className="flex flex-wrap gap-x-4 mb-1">

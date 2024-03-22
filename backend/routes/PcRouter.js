@@ -6,17 +6,18 @@ const PcModel = require ("../model/PcModel")
  //Add to database
 router.post("/", async (req, res) => {
 try{
-    const { cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
+    const { pcName, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
     console.log(req.body)
 
     const newPc = new PcModel
-    ({ ownerId: req.session.user.id,
+    ({ pcName,
+		ownerId: req.session.user.id,
         cpu,
         gpu, 
         ramType, 
         ramSpeed, 
         ramAmount, 
-        pcType
+        pcType,
     });
     await newPc.save();
     res.status(201).json({
@@ -58,8 +59,10 @@ router.delete("/:id", async (req, res) => {
 
 // //Update
 router.put("/:id", async (req, res) => {
-	const {ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
+	const {pcName, ownerId, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
 	const pcObj = await PcModel.findById(req.params.id);
+	if (pcName)
+	pcObj.pcName = pcName;
 	if (ownerId)
 	pcObj.ownerId = ownerId;
 	if (cpu)
