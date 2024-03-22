@@ -202,7 +202,7 @@ export default function AddPcForm(){
                         <div className="flex flex-col items-center justify-center">
                         <button 
                             className="bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 mt-4"
-                            onClick={e=>registerNewPc(e)}
+                            // onClick={e=>registerNewPc(e)}
                             >Add new PC
                         </button>
                     </div>

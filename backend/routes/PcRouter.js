@@ -10,7 +10,7 @@ try{
     console.log(req.body)
 
     const newPc = new PcModel
-    ({ ownerId: req.session.id,
+    ({ ownerId: req.session.user.id,
         cpu,
         gpu, 
         ramType, 
