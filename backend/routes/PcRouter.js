@@ -42,8 +42,18 @@ router.get("/", async (req, res) => {
 
 // //Get all pc by id
 router.get("/:id", async (req, res) => {
+	try{
 	const pc = await PcModel.findById(req.params.id);
-	res.send(pc.getInstance());
+	if(!pc) 
+		return res.status(404).json({message: "pc was not found", status:fasle}); 
+	return res.status(200).json({pc: pc.getInstance(), status: true});
+}
+catch(err){
+	return res.status(500).json({
+        message: "Wrong ID...",
+        status: false,
+    });
+}
 });
 
 // //Delete

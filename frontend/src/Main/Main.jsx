@@ -31,7 +31,7 @@ function AuthButtons() {
 	);
   }
 
-function PcPost({pc}) {
+ function PcPost({pc}) {
 	// console.log(pc);
 
 	function choosePcImage(pcType) {
@@ -49,55 +49,26 @@ function PcPost({pc}) {
 				return "https://placehold.co/400x300";
 		}
 	}
-
-
 	return (
 		<div className="flex justify-center items-center pb-7 ">
-			<div className="bg-slate-300 min-h-[390px] min-w-[100px] max-w-[350px] max-h-[390px] hover:bg-[#606060f8] hover:text-[white]">
+			<div className="bg-slate-300 min-h-[100px] min-w-[100px] max-w-[350px] max-h-[390px] hover:bg-[#606060f8] hover:text-[white]">
 				<div className="img">
 					<img src={choosePcImage(pc.pcType)} className="w-full"/>
 				</div>
 				<div className="details py-5 mx-6">
-					<a href="/pc1">
+					<a href={`/pc/${pc.id}`}>
 						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcName}</h3>
 					</a>
 					<div className="text-xs">
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								CPU
-							</span>
-							<span>{pc.cpu}</span>
-						</div>
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								GPU:
-							</span>
-							<span>{pc.gpu}</span>
-						</div>
 						<div className="flex flex-wrap gap-x-4 mb-1">
 							<span className="inline-block w-2/5 font-bold">
 								Pc type:
 							</span>
 							<span>{pc.pcType}</span>						
 						</div>
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								Ram type:
-							</span>
-							<span>{pc.ramType}</span>						
-						</div>
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								Ram speed:
-							</span>
-							<span>{pc.ramSpeed}</span>						
-						</div>
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								Ram amount:
-							</span>
-							<span>{pc.ramAmount}</span>						
-						</div>
+						<a href={`/pc/${pc.id}`}>
+						<h3 className="underline mt-5">More specifications....</h3>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -146,7 +117,7 @@ export default function Main() {
 					to="/add-new-pc"
 					className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
 					style={{ maxWidth: "200px" }}
-					>Add a rent
+					>Add 
 				</Link>
 			</div>
 			)}

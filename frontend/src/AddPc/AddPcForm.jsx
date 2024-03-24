@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { savePc } from "../../utils/api/pcService";
 import ErrorMessage from "../../src/ErrorMessage/ErrorMessage";
 import { useNavigate } from "react-router-dom";
+import { checkSession } from "/utils/api/sessions";
 
 export default function AddPcForm(){
   const [errorMessage, setErrorMessage] = useState(""); 
-  const navigate = useNavigate();
+  const [setIsLoggedIn] = useState(false);
+	const navigate = useNavigate();
     console.log("Component rerenders");
 
     const pcNameInputRef = useRef(null);
@@ -19,6 +21,14 @@ export default function AddPcForm(){
 
 
     useEffect(() => {
+      checkSession((data) => {
+        setIsLoggedIn(data.isLoggedIn);
+        if (!data.isLoggedIn) {
+          navigate("/login");
+        }
+      });
+
+
       pcNameInputRef.current.focus();
 
       const focusCPU = (e) => {
