@@ -8,6 +8,8 @@ import NotFound from "./not-found/NotFound"
 import Main from "./Main/Main";
 import AddPcForm from "./AddPc/AddPcForm";
 import PcPage from "./pc/PcPage";
+import MyComputers from "./my-computers/MyComputers";
+import LoggedIn from './LoggedIn';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +26,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/add-new-pc",
-    element: <AddPcForm />,
+    element: <LoggedIn><AddPcForm /></LoggedIn>,
   },
   {
     path: "/pc/:id",
     element: <PcPage />,
+  },
+  {
+    path: "my-computers",
+    element: <LoggedIn><MyComputers/></LoggedIn>,
   },
   {
     path: "*",

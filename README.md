@@ -31,6 +31,7 @@ Before you begin, ensure you have the following installed on your machine:
 `npm i express`
 `npm i express-session`
 `npm i express-mysql-session`
+`npm i multer`
 
 - frontend:
 `npm install`

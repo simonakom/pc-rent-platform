@@ -1,6 +1,6 @@
 import clickImage from '../assets/screen.png'; 
-import desktopImage from "/src/assets/pc-images/pc.jpg.webp";
-import laptopImage from "/src/assets/pc-images/laptop.webp";
+import desktopImage from "/src/assets/pc-images/pc.jpg";
+import laptopImage from "/src/assets/pc-images/laptop.jpeg";
 import macImage from "/src/assets/pc-images/macbook.jpg";
 import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
@@ -106,7 +106,7 @@ export default function Main() {
 	}
 
 	return (
-		<div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5">
+		<div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5 min-h-screen">
 		<div className="container md:w-[80%] lg:w-[85%] xl:w-[95%] bg-[#131313b6] min-h-[700px] rounded-2xl p-6">
 			<div className="mx-10 mb-4 md:mb-6 lg:mb-8 xl:mb-10 flex items-center flex-col md:flex-row md:justify-between gap-4">
 			{!isLoggedIn && <AuthButtons />}

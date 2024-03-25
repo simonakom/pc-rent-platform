@@ -68,7 +68,7 @@ module.exports = class PC {
         }
 
 	static async findById(id) { 
-		const results = await executeQuery(`SELECT * FROM pc WHERE id=?`, [id,]);
+		const results = await executeQuery(`SELECT * FROM pc WHERE id=?`, [id]);
 		console.log(results);
 		const result = results[0][0];
 		return new PC({

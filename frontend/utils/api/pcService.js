@@ -1,10 +1,11 @@
 export async function savePc(pc, callback) {
 	const promise = await fetch("/server/api/pc", {
 		method: "post",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(pc),
+		// headers: {
+		// 	"Content-Type": "multipart/form-data",
+		// }, //no content type bc its form-data by default
+		//body: JSON.stringify(pc), // no strigify
+		body: pc,
 	});
 
 	const result = await promise.json();
@@ -16,4 +17,10 @@ export async function savePc(pc, callback) {
         const response = await promise.json();
         callback (response);
 		// console.log(response)
+	}
+
+	export async function getById(id, callback){
+		const promise = await fetch(`/server/api/pc/${id}`);
+        const response = await promise.json();
+        callback (response);
 	}

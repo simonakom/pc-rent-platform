@@ -1,14 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import clickImage from '../assets/screen.png'; 
 import { useEffect, useRef, useState } from "react";
 import { savePc } from "../../utils/api/pcService";
 import ErrorMessage from "../../src/ErrorMessage/ErrorMessage";
 import { useNavigate } from "react-router-dom";
-import { checkSession } from "/utils/api/sessions";
 
 export default function AddPcForm(){
-  const [errorMessage, setErrorMessage] = useState(""); 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState(""); 
+    const navigate = useNavigate();
     console.log("Component rerenders");
 
     const pcNameInputRef = useRef(null);
@@ -18,17 +17,9 @@ export default function AddPcForm(){
     const ramTypeInputRef = useRef(null);
     const ramSpeedInputRef = useRef(null);
     const ramAmountInputRef = useRef(null);
-
+    const imageInputRef = useRef(null);
 
     useEffect(() => {
-      checkSession((data) => {
-        setIsLoggedIn(data.isLoggedIn);
-        if (!data.isLoggedIn) {
-          navigate("/login");
-        }
-      });
-
-
       pcNameInputRef.current.focus();
 
       const focusCPU = (e) => {
@@ -36,7 +27,7 @@ export default function AddPcForm(){
           cpuInputRef.current.focus();
         }
     };
-    pcNameInputRef.current?.addEventListener("keydown", focusCPU);
+        pcNameInputRef.current?.addEventListener("keydown", focusCPU);
 
   
       const focusGPU = (e) => {
@@ -74,13 +65,20 @@ export default function AddPcForm(){
       };
       ramSpeedInputRef.current?.addEventListener("keydown", focusRamAmount);
 
+      const focusImage = (e) => {
+        if (e.key === "Enter") {
+            imageInputRef.current.focus();
+        }
+      };
+      ramAmountInputRef.current?.addEventListener("keydown", focusImage);
+
     const send = (e) => {
         if (e.key === "Enter") {
           e.preventDefault();
           registerNewPc(e);
         }
       };
-      ramAmountInputRef.current?.addEventListener("keydown", send);
+      imageInputRef.current?.addEventListener("keydown", send);
 
   // Cleanup function to remove event listeners
   return () => {
@@ -89,28 +87,31 @@ export default function AddPcForm(){
     computerTypeInputRef.current?.removeEventListener("keydown", focusRamType);
     ramTypeInputRef.current?.removeEventListener("keydown", focusRamSpeed);
     ramSpeedInputRef.current?.removeEventListener("keydown", focusRamAmount);
-    ramAmountInputRef.current?.removeEventListener("keydown", send);
+    ramAmountInputRef.current?.removeEventListener("keydown", focusImage);
+    imageInputRef.current?.removeEventListener("keydown", send);
+    
 };
 }, []);
 
     function registerNewPc(e){
         e.preventDefault();
         if (e.pageX === 0 && e.pageY === 0) return 
-        const newPcObject = {
-            pcName: pcNameInputRef.current.value,
-            cpu: cpuInputRef.current.value,
-            gpu: gpuInputRef.current.value,
-            ramType: ramTypeInputRef.current.value,
-            ramSpeed: ramSpeedInputRef.current.value,
-            ramAmount: ramAmountInputRef.current.value,
-            pcType: computerTypeInputRef.current.value,
-          };
-          console.log(newPcObject);
+
+        const formData = new FormData();
+        formData.append("pcName", pcNameInputRef.current.value);
+		formData.append("cpu", cpuInputRef.current.value);
+		formData.append("gpu", gpuInputRef.current.value);
+        formData.append("pcType", computerTypeInputRef.current.value);
+		formData.append("ramType", ramTypeInputRef.current.value);
+		formData.append("ramSpeed", ramSpeedInputRef.current.value);
+		formData.append("ramAmount", ramAmountInputRef.current.value);
+		formData.append("files", imageInputRef.current.value);
+		console.log(formData.get("files"));
 
           // validations:
           const cpu = cpuInputRef.current.value;
           if (cpu.length < 5 || cpu.length > 20) {
-              setErrorMessage("CPU must be between 5 and 20 characters.");
+              setErrorMessage("CPU must be between 2 and 10 characters.");
               return; 
           }
           else if (
@@ -120,18 +121,19 @@ export default function AddPcForm(){
             !computerTypeInputRef.current.value ||
             !ramTypeInputRef.current.value ||
             !ramSpeedInputRef.current.value ||
-            !ramAmountInputRef.current.value
+            !ramAmountInputRef.current.value ||
+            !imageInputRef.current.value
         ) {
-            setErrorMessage("Please, fill all fields");
+            setErrorMessage("Please, fill all fields and select a PC image.");
             return;
         }
 
-          savePc(newPcObject, (result)=>{
-            if(result.status) navigate("/");
-            else {
-              setErrorMessage("Addition to database was unsuccessful");
-            }
-          })
+        savePc(formData, (response) => {
+			if (response.status) navigate("/");
+			else {
+				setErrorMessage("Addition to database was unsuccessful");
+			}
+		});
     }
 
     const handleCloseError = () => {
@@ -245,8 +247,27 @@ export default function AddPcForm(){
                                 ref={ramAmountInputRef}
                                 type="number" 
                                 placeholder="Enter RAM (GB)..." 
-                                onKeyDown={(e) => handleEnterKeyForSelect(e, ramAmountInputRef)}
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, imageInputRef)}
                                 className="outline-none border-[1px] border-slate-800 w-full sm:w-4/5 px-2 py-1 rounded-md bg-[#88828860]" />
+                        </label>
+                    </div>
+                    <div className="mb-2">
+                        <label className="flex flex-col sm:flex-row items-center">
+                            <span className="select-none w-full sm:w-2/6 mb-2 sm:mb-0">Pc images:</span>
+                            <input 
+                                ref={imageInputRef} 
+                                type="file"
+                                accept=".jpg,.png" 
+                                placeholder="Enter RAM (GB)..." 
+                                onKeyDown={(e) => handleEnterKeyForSelect(e, imageInputRef)}
+                                multiple
+                                onChange={(e) => {
+                                    if (e.target.files.length > 2){
+                                        setErrorMessage("Maximum file choose: 2");
+                                        e.target.value = ""
+                                    }
+                                }}
+                                className="outline-none w-full sm:w-4/5 px-2 py-1" />
                         </label>
                     </div>
                         <div className="flex flex-col items-center justify-center">

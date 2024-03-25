@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .register-bg {
     background-image: url(./assets/bg-register.jpg);
     background-size: cover;
@@ -30,3 +31,14 @@
     background-position: center;
     height: 100vh; 
 }
+
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #60346b;
+    color: white;
+    padding: 3px 10px;
+    border: 1px solid #60346b;
+    border-radius: 5px;
+  }
+  input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #7a5882;
+  }
