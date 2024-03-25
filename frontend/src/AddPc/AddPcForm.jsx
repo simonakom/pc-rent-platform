@@ -7,7 +7,7 @@ import { checkSession } from "/utils/api/sessions";
 
 export default function AddPcForm(){
   const [errorMessage, setErrorMessage] = useState(""); 
-  const [setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate();
     console.log("Component rerenders");
 
