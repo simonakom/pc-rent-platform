@@ -7,7 +7,6 @@ export async function savePc(pc, callback) {
 		//body: JSON.stringify(pc), // no strigify
 		body: pc,
 	});
-
 	const result = await promise.json();
 	callback(result)
 }
@@ -16,7 +15,6 @@ export async function savePc(pc, callback) {
 		const promise = await fetch("/server/api/pc");
         const response = await promise.json();
         callback (response);
-		// console.log(response)
 	}
 
 	export async function getById(id, callback){

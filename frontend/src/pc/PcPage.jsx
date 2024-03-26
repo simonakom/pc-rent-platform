@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom"; 
 import { getById } from "/utils/api/pcService";
-import notFoundImage from '../assets/not-found.png'; 
 import { checkSession, logout } from "/utils/api/sessions";
+import notFoundImage from '../assets/not-found.png'; 
 import clickImage from '../assets/screen.png'; 
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
+
+
 
 export default function PcPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isPcFound, setIsPcFound] = useState(false);
 	const [pcDetails, setPcDetails] = useState({});
+    const [pcImages, setPcImages] = useState([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0); // Track current image index
 	const { id } = useParams();
 
 	useEffect(() => {
 		getById(id, (resp) => {
 			setIsPcFound(resp.status);
 			setPcDetails(resp.pc);  
+            setPcImages(resp.pcImages)
 		});
-	}, []);
+	}, [id]);
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -38,7 +44,18 @@ export default function PcPage() {
 		});
 	}
 
-	if (!isPcFound) return ( 
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pcImages.length);
+    };
+
+    const handlePrevImage = () => {
+        setCurrentImageIndex((prevIndex) =>
+            prevIndex === 0 ? pcImages.length - 1 : prevIndex - 1
+        );
+    };
+
+
+    if (!isPcFound) return ( 
         <main className="main-bg flex justify-center items-center">
             <div className="container mx-auto min-h-screen flex justify-center items-center">
                 <div className="flex flex-col items-center">
@@ -49,49 +66,68 @@ export default function PcPage() {
                 </div>
             </div>
         </main>
-);
-	else
-		return (
-            <div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5 min-h-screen">
+    );
+    else return (
+        <div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5 min-h-screen">
             <div className="container md:w-[80%] lg:w-[85%] xl:w-[95%] bg-[#131313b6] min-h-[700px] rounded-2xl p-6">
                 <div className="mx-10 mb-4 md:mb-6 lg:mb-8 xl:mb-10 flex items-center flex-col md:flex-row md:justify-between gap-4">
-                {isLoggedIn && (
-                <div className="flex flex-col md:flex-row items-center whitespace-nowrap">
-                    <img className="w-[60px] md:mt-0 ml-4 mr-4 mb-5" src={clickImage} alt="click" />
-                    <Link
-                        to="/"
-                        className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
-                        style={{ maxWidth: "200px" }}
-                        >Home 
-                    </Link>
+                    {isLoggedIn && (
+                        <div className="flex flex-col md:flex-row items-center whitespace-nowrap">
+                            <img className="w-[60px] md:mt-0 ml-4 mr-4 mb-5" src={clickImage} alt="click" />
+                            <Link
+                                to="/"
+                                className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
+                                style={{ maxWidth: "200px" }}
+                            >
+                                Home 
+                            </Link>
+                        </div>
+                    )}
+                    {isLoggedIn && (
+                        <button
+                            className="block md:inline-block  bg-[#431b3d] hover:bg-[#4e2548] rounded text-white px-8 py-2 text-center overflow-hidden"
+                            style={{ maxWidth: "200px" }}
+                            onClick={logOut}
+                        >
+                            Logout
+                        </button>
+                    )}
                 </div>
-                )}
-                {isLoggedIn && (
-                    <button
-                        className="block md:inline-block  bg-[#431b3d] hover:bg-[#4e2548] rounded text-white px-8 py-2 text-center overflow-hidden"
-                        style={{ maxWidth: "200px" }}
-                        onClick={logOut}
-                        >Logout
-                    </button>
-                )}
-                </div>
-                <div className="absolute flex translate-x-1/2 translate-y-1/2 right-1/2 bottom-1/2 bg-[#131313b6] text-white min-w-[400px] w-[10%] rounded-xl overflow-hidden">
-					<div className="pc-image bg-blue-50">
-						<img
-							src="w-full"
-							alt="pc-image"
-							className="min-h-[300px]"
-						/>
-					</div>
-					<div className="p-4">
-						<h3 className="text-4xl mb-5 border-b-4 text-white border-[#c085b8] w-fit pr-4 text-center">
-							{pcDetails.pcName}
-						</h3>
-						<p className="font-bold mb-5">
-							Owner: <span className="italic font-normal">User123</span>
-						</p>
-                        <h3 className="font-bold mb-5">Specifications:</h3>
-                            <div className="text-xs">
+                <div className="flex justify-center"> 
+                    <div className=" bg-[#131313b6] text-white rounded-xl max-w-[500px] overflow-hidden relative">
+                        <div className="pc-image bg-blue-50 relative">
+                            <img
+                                src={"/server/api/" + pcImages[currentImageIndex].uri}
+                                alt="pc-image"
+                                className="max-h-[300px]"
+                            />
+                            {pcImages.length > 1 && (
+                                <>
+                                    <button
+                                        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
+                                        onClick={handlePrevImage}
+                                    >
+                                        <FaAngleDoubleLeft />
+                                    </button>
+                                    <button
+                                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
+                                        onClick={handleNextImage}
+                                    >
+                                        <FaAngleDoubleRight />
+
+                                    </button>
+                                </>
+                            )}
+                        </div>
+                        <div className="p-4 ml-10">
+                            <h3 className="text-4xl mb-5 border-b-4 text-white border-[#c085b8] w-fit pr-4 text-center]">
+                                {pcDetails.pcName}
+                            </h3>
+                            <p className="font-bold mb-4 text-sm">
+                                Owner: <span className="italic font-normal">User123</span>
+                            </p>
+                            <h3 className="font-bold text-sm mb-4">Specifications:</h3>
+                            <div className="text-sm">
                                 <div className="flex flex-wrap gap-x-4 mb-1">
                                     <span className="inline-block w-3/7 font-bold">
                                         CPU
@@ -129,8 +165,10 @@ export default function PcPage() {
                                     <span>{pcDetails.ramAmount}</span>
                                 </div>
                             </div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-        )}
+        </div>
+    );
+}

@@ -48,7 +48,7 @@ module.exports = class PC {
 	
     static async findAll() {
         const results = await executeQuery(`SELECT * FROM pc`)
-        console.log(results);
+        // console.log(results);
         return results[0].map(
             (pcObj) => 
                 new PC(

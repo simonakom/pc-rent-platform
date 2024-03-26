@@ -1,7 +1,5 @@
 import clickImage from '../assets/screen.png'; 
-import desktopImage from "/src/assets/pc-images/pc.jpg";
-import laptopImage from "/src/assets/pc-images/laptop.jpeg";
-import macImage from "/src/assets/pc-images/macbook.jpg";
+import placeholder from '../assets/placeholder.jpg'; 
 import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,46 +30,34 @@ function AuthButtons() {
   }
 
  function PcPost({pc}) {
-	// console.log(pc);
+	console.log(pc);
 
-	function choosePcImage(pcType) {
-		// if (pcType === "Desktop Computer") {
-		// 	return desktopImage;
-		// }
-		switch (pcType) {
-			case "Desktop Computer":
-				return desktopImage;
-			case "Laptop":
-				return laptopImage;
-			case "Macbook":
-				return macImage;
-			default:
-				return "https://placehold.co/400x300";
-		}
+	function choosePcImage(pc) {
+		const pcImagesArray = pc.images;
+		if(pcImagesArray.length !== 0) return `/server/api/${pcImagesArray[0].uri}`;
+		else return placeholder;
 	}
 	return (
-		<div className="flex justify-center items-center pb-7 ">
-			<div className="bg-slate-300 min-h-[100px] min-w-[100px] max-w-[350px] max-h-[390px] hover:bg-[#606060f8] hover:text-[white]">
-				<div className="img">
-					<img src={choosePcImage(pc.pcType)} className="w-full"/>
-				</div>
-				<div className="details py-5 mx-6">
-					<a href={`/pc/${pc.id}`}>
-						<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcName}</h3>
-					</a>
-					<div className="text-xs">
-						<div className="flex flex-wrap gap-x-4 mb-1">
-							<span className="inline-block w-2/5 font-bold">
-								Pc type:
-							</span>
-							<span>{pc.pcType}</span>						
-						</div>
-						<a href={`/pc/${pc.id}`}>
-						<h3 className="underline mt-5">More specifications....</h3>
-						</a>
+		<div className="flex justify-center items-center pb-7">
+		<div className="bg-slate-300 min-h-[300px] hover:bg-[#68676bb5] hover:text-[white] sm:w-[200px] md:w-[260px] lg:w-[300px] xl:w-[390px] xl:h-[360px]">
+			<div className="img">
+				<img src={choosePcImage(pc)} className="w-full" alt={`Image of ${pc.pcName}`} />
+			</div>
+			<div className="details py-5 mx-6">
+				<a href={`/pc/${pc.id}`}>
+					<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcName}</h3>
+				</a>
+				<div className="text-xs">
+					<div className="flex flex-wrap gap-x-4 mb-1">
+						<span className="inline-block w-2/5 font-bold">Pc type:</span>
+						<span>{pc.pcType}</span>
 					</div>
+					<a href={`/pc/${pc.id}`}>
+						<h3 className="underline mt-5">More specifications....</h3>
+					</a>
 				</div>
 			</div>
+		</div>
 		</div>
 	);
 }

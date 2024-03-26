@@ -2,13 +2,15 @@ const express = require("express");
 const router = express.Router();
 const PcModel = require ("../model/PcModel")
 const upload = require ("../utils/multerConfig")
+const PcImageModel = require ("../model/PcImageModel")
 
 
  //Add to database
 router.post("/", upload.array("files", 2), async (req, res) => {
 try{
     const { pcName, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
-    console.log(req.body)
+    // console.log(req.body)
+	// console.log(req.files)
 
     const newPc = new PcModel
     ({ pcName,
@@ -21,9 +23,15 @@ try{
         pcType,
     });
     await newPc.save();
+
+	const allPcImageModels = req.files.map((file) => new PcImageModel({uri: file.path, pcId: newPc.id }));
+	const allPcImageSavePromises = allPcImageModels.map((model) => model.save());
+	await Promise.all(allPcImageSavePromises);
+
     res.status(201).json({
         message: "Information successfully saved to the database",
         newPc: newPc.getInstance(),
+		pcImages: allPcImageModels.map((model) => model.getInstance()),
 		status: true,
     });
 }
@@ -37,24 +45,38 @@ catch(err) {
 
 // //Get all pc
 router.get("/", async (req, res) => {
-	const allPc = await PcModel.findAll()
-	res.status(200).json(allPc.map(pcObjs => pcObjs.getInstance()));
-	})
+	const allPcsWithoutImages = await PcModel.findAll();
+	const startTime = Date.now();
+	const allPcsWithImages = await Promise.all(
+		allPcsWithoutImages.map(async (pcModel) => {
+			const pcImages = await PcImageModel.getByPcId(pcModel.id); //2 nuotraukos
+			return { ...pcModel.getInstance(), images: pcImages };
+		})
+	);
+	const endTime = Date.now();
+	console.log(endTime - startTime);
+
+	console.log(allPcsWithImages);
+	res.status(200).json(allPcsWithImages);
+});
 
 // //Get all pc by id
 router.get("/:id", async (req, res) => {
-	try{
-	const pc = await PcModel.findById(req.params.id);
-	if(!pc) 
-		return res.status(404).json({message: "pc was not found", status:fasle}); 
-	return res.status(200).json({pc: pc.getInstance(), status: true});
-}
-catch(err){
-	return res.status(500).json({
-        message: "Wrong ID...",
-        status: false,
-    });
-}
+	try {
+		const pc = await PcModel.findById(req.params.id);
+		if (!pc)
+			return res.status(404).json({ message: "pc not found", status: false });
+		const pcImages = await PcImageModel.getByPcId(pc.id);
+
+		return res.status(200).json({
+			pc: pc.getInstance(),
+			pcImages: pcImages.map((pcImage) => pcImage.getInstance()),
+			status: true,
+		});
+	} catch (err) {
+		console.log(err);
+		return res.status(400).json({ message: "Bad Id", status: false });
+	}
 });
 
 // //Delete

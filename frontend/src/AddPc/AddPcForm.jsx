@@ -105,8 +105,11 @@ export default function AddPcForm(){
 		formData.append("ramType", ramTypeInputRef.current.value);
 		formData.append("ramSpeed", ramSpeedInputRef.current.value);
 		formData.append("ramAmount", ramAmountInputRef.current.value);
-		formData.append("files", imageInputRef.current.value);
-		console.log(formData.get("files"));
+		const files = imageInputRef.current.files;
+
+        for (let i = 0; i < files.length; i++){
+            formData.append("files", files[i]);
+        }
 
           // validations:
           const cpu = cpuInputRef.current.value;

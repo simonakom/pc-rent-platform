@@ -36,6 +36,7 @@ Before you begin, ensure you have the following installed on your machine:
 - frontend:
 `npm install`
 `npm install react-router-dom localforage match-sorter sort-by`
+`npm install react-icons`
 tailwind
 
 
