@@ -60,8 +60,14 @@ export default function PcPage() {
             <div className="container mx-auto min-h-screen flex justify-center items-center">
                 <div className="flex flex-col items-center">
                     <img src={notFoundImage} alt="not-found-image" className="w-[70%]" />
-                    <div className="p-4">
+                    <div className="p-4 text-center">
                         <p className="font-semibold text-white text-3xl">Ops..Pc not found...</p>
+                        <Link
+						to="/"
+						className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 mt-5 text-center overflow-hidden"
+						style={{ maxWidth: "200px" }}
+                        >Go Home
+                        </Link>                    
                     </div>
                 </div>
             </div>
