@@ -32,6 +32,14 @@ class PcImage {
 		);
 	}
 
+	static async findAll() {
+		const result = await executeQuery("SELECT * FROM `pc_images`")
+		const resultArr = result[0];
+		return resultArr.map(
+            (row) => new PcImage({ uri: row.uri, pcId: row.pc_id }, row.id)
+        );
+	}
+
 	getInstance() {
 		return { ...this, id: this.#id };
 	}

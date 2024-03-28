@@ -1,11 +1,10 @@
 import clickImage from '../assets/screen.png'; 
-import placeholder from '../assets/placeholder.jpg'; 
 import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllPcs } from "../../utils/api/pcService";
+import PcPost from "../PcPost";
 import * as PropTypes from "prop-types";
-
 
 function AuthButtons() {
 	return (
@@ -29,38 +28,6 @@ function AuthButtons() {
 	);
   }
 
- function PcPost({pc}) {
-	console.log(pc);
-
-	function choosePcImage(pc) {
-		const pcImagesArray = pc.images;
-		if(pcImagesArray.length !== 0) return `/server/api/${pcImagesArray[0].uri}`;
-		else return placeholder;
-	}
-	return (
-		<div className="flex justify-center items-center pb-7">
-		<div className="bg-slate-300 min-h-[300px] hover:bg-[#68676bb5] hover:text-[white] sm:w-[200px] md:w-[260px] lg:w-[300px] xl:w-[390px] xl:h-[360px]">
-			<div className="img">
-				<img src={choosePcImage(pc)} className="w-full" alt={`Image of ${pc.pcName}`} />
-			</div>
-			<div className="details py-5 mx-6">
-				<a href={`/pc/${pc.id}`}>
-					<h3 className="title text-xl mb-2 border-b-4 border-[#66305f] w-fit pr-4">{pc.pcName}</h3>
-				</a>
-				<div className="text-xs">
-					<div className="flex flex-wrap gap-x-4 mb-1">
-						<span className="inline-block w-2/5 font-bold">Pc type:</span>
-						<span>{pc.pcType}</span>
-					</div>
-					<a href={`/pc/${pc.id}`}>
-						<h3 className="underline mt-5">More specifications....</h3>
-					</a>
-				</div>
-			</div>
-		</div>
-		</div>
-	);
-}
 
 export default function Main() {
 	const [pcList, setPcList] = useState([]);
@@ -97,13 +64,19 @@ export default function Main() {
 			<div className="mx-10 mb-4 md:mb-6 lg:mb-8 xl:mb-10 flex items-center flex-col md:flex-row md:justify-between gap-4">
 			{!isLoggedIn && <AuthButtons />}
 			{isLoggedIn && (
-			<div className="flex flex-col md:flex-row items-center whitespace-nowrap">
+			<div className="flex flex-col md:flex-row items-center whitespace-nowrap gap-5">
 				<img className="w-[60px] md:mt-0 ml-4 mr-4 mb-5" src={clickImage} alt="click" />
 				<Link
 					to="/add-new-pc"
 					className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
 					style={{ maxWidth: "200px" }}
-					>Add 
+					>Add PC
+				</Link>
+				<Link
+					to="/my-computers"
+					className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
+					style={{ maxWidth: "200px" }}
+					>My computers
 				</Link>
 			</div>
 			)}

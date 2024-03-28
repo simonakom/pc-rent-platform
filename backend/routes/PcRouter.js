@@ -45,19 +45,19 @@ catch(err) {
 
 // //Get all pc
 router.get("/", async (req, res) => {
-	const allPcsWithoutImages = await PcModel.findAll();
-	const startTime = Date.now();
-	const allPcsWithImages = await Promise.all(
-		allPcsWithoutImages.map(async (pcModel) => {
-			const pcImages = await PcImageModel.getByPcId(pcModel.id); //2 nuotraukos
-			return { ...pcModel.getInstance(), images: pcImages };
-		})
-	);
-	const endTime = Date.now();
-	console.log(endTime - startTime);
-
-	console.log(allPcsWithImages);
+	const allPcsWithImages = await PcModel.findAllWithImages();
 	res.status(200).json(allPcsWithImages);
+});
+
+// //Get posted pc
+router.get("/my-computers", async (req, res) => {
+	console.log("LABAS");
+	if (!req.session.isLoggedIn)
+		return res.status(403).json({ message: "Unauthorized", status: false });
+	const allPcs = await PcModel.findAllByOwnerIdWithImages(req.session.user.id);
+	return res
+		.status(200)
+		.json({ allPcs: allPcs.map((pc) => pc.getInstance()), status: true });
 });
 
 // //Get all pc by id

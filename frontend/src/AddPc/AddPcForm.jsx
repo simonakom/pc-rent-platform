@@ -113,7 +113,7 @@ export default function AddPcForm(){
 
           // validations:
           const cpu = cpuInputRef.current.value;
-          if (cpu.length < 5 || cpu.length > 20) {
+          if (cpu.length < 2 || cpu.length > 20) {
               setErrorMessage("CPU must be between 2 and 10 characters.");
               return; 
           }
