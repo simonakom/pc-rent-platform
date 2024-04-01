@@ -12,41 +12,45 @@ export default function MyComputers() {
 		DESCENDING: "desc",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [allPcs, setAllPcs] = useState([]);
-	const [selectedSortingMode, setSelectedSortingMode] = useState(sortingModes.DEFAULT);
-	const [selectedCpuSortingMode, setSelectedCpuSortingMode] = useState(sortingModes.DEFAULT);
+    const [allPcs, setAllPcs] = useState([]);
+    const [selectedSortingMode, setSelectedSortingMode] = useState(sortingModes.DEFAULT);
+    const [selectedCpuSortingMode, setSelectedCpuSortingMode] = useState(sortingModes.DEFAULT);
     const [selectedGpuSortingMode, setSelectedGpuSortingMode] = useState(sortingModes.DEFAULT);
 
-	const sortedComputers = useMemo(() => {
+    const sortedComputers = useMemo(() => {
         const pcs = [...allPcs];
         return pcs.sort((pc1, pc2) => {
-            // Sorting based on selectedSortingMode
-            let comparison = 0;
             if (selectedSortingMode === sortingModes.ASCENDING) {
-                comparison = pc1.pcName.trimStart().localeCompare(pc2.pcName.trimStart());
+                return pc1.pcName.trimStart().localeCompare(pc2.pcName.trimStart());
             } else if (selectedSortingMode === sortingModes.DESCENDING) {
-                comparison = pc2.pcName.trimStart().localeCompare(pc1.pcName.trimStart());
+                return pc2.pcName.trimStart().localeCompare(pc1.pcName.trimStart());
+            } else {
+                return 0;
             }
-            
-            // If sorting by CPU is selected
-            if (selectedCpuSortingMode === sortingModes.ASCENDING) {
-                comparison = comparison || pc1.cpu.localeCompare(pc2.cpu);
-            } else if (selectedCpuSortingMode === sortingModes.DESCENDING) {
-                comparison = comparison || pc2.cpu.localeCompare(pc1.cpu);
-            }
-
-            // If sorting by GPU is selected
-            if (selectedGpuSortingMode === sortingModes.ASCENDING) {
-                comparison = comparison || pc1.gpu.localeCompare(pc2.gpu);
-            } else if (selectedGpuSortingMode === sortingModes.DESCENDING) {
-                comparison = comparison || pc2.gpu.localeCompare(pc1.gpu);
-            }
-
-            return comparison;
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allPcs, selectedSortingMode, selectedCpuSortingMode, selectedGpuSortingMode]);
-	
+    }, [allPcs, selectedSortingMode]);
+
+    const sortedComputersWithCpuAndGpuSorting = useMemo(() => {
+        return sortedComputers.sort((pc1, pc2) => {
+            if (selectedCpuSortingMode === sortingModes.ASCENDING) {
+                return pc1.cpu.trimStart().localeCompare(pc2.cpu.trimStart());
+            } else if (selectedCpuSortingMode === sortingModes.DESCENDING) {
+                return pc2.cpu.trimStart().localeCompare(pc1.cpu.trimStart());
+            } else {
+                return 0;
+            }
+        }).sort((pc1, pc2) => {
+            if (selectedGpuSortingMode === sortingModes.ASCENDING) {
+                return pc1.gpu.trimStart().localeCompare(pc2.gpu.trimStart());
+            } else if (selectedGpuSortingMode === sortingModes.DESCENDING) {
+                return pc2.gpu.trimStart().localeCompare(pc1.gpu.trimStart());
+            } else {
+                return 0;
+            }
+        });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sortedComputers, selectedCpuSortingMode, selectedGpuSortingMode]);
 
 	useEffect(() => {
 		getMyPcs((resp) => {
@@ -130,7 +134,7 @@ export default function MyComputers() {
 				</select>
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 mt-8 mx-10">
-				{sortedComputers.map((pc)=> (
+				{sortedComputersWithCpuAndGpuSorting.map((pc)=> (
 					<PcPost 
 						key={`PC-${pc.id}`} 
 						pc={pc}
