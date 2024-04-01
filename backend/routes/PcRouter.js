@@ -46,12 +46,13 @@ catch(err) {
 // //Get all pc
 router.get("/", async (req, res) => {
 	const allPcsWithImages = await PcModel.findAllWithImages();
-	res.status(200).json(allPcsWithImages);
+	res.status(200).json(allPcsWithImages.map((pc)=>{
+		return pc.getInstance();
+	}));
 });
 
 // //Get posted pc
 router.get("/my-computers", async (req, res) => {
-	console.log("LABAS");
 	if (!req.session.isLoggedIn)
 		return res.status(403).json({ message: "Unauthorized", status: false });
 	const allPcs = await PcModel.findAllByOwnerIdWithImages(req.session.user.id);

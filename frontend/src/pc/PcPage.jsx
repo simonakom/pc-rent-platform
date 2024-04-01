@@ -5,7 +5,7 @@ import { checkSession, logout } from "/utils/api/sessions";
 import notFoundImage from '../assets/not-found.png'; 
 import clickImage from '../assets/screen.png'; 
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
-
+import placeholder from '../assets/placeholder.jpg'; 
 
 
 export default function PcPage() {
@@ -103,7 +103,7 @@ export default function PcPage() {
                     <div className=" bg-[#131313b6] text-white rounded-xl max-w-[500px] overflow-hidden relative">
                         <div className="pc-image bg-blue-50 relative">
                             <img
-                                src={"/server/api/" + pcImages[currentImageIndex].uri}
+                                src={pcImages.length === 0 ? placeholder : "/server/api/" + pcImages[currentImageIndex].uri}
                                 alt="pc-image"
                                 className="max-h-[300px]"
                             />
