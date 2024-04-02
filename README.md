@@ -24,6 +24,8 @@ Before you begin, ensure you have the following installed on your machine:
 - mySQL
 - nginx
 
++ env file
+
 ###  Installed dependencies
 
 - backend:
