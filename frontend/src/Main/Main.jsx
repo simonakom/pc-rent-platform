@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { checkSession, logout } from "/utils/api/sessions";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllPcs } from "../../utils/api/pcService";
-import PcPost from "../PcPost";
+import PcPost from "../PcPost/PcPost";
 import * as PropTypes from "prop-types";
 
 function AuthButtons() {

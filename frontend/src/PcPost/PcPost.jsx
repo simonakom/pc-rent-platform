@@ -1,5 +1,4 @@
-// import placeholder from '../src/assets/placeholder.jpg'; 
-import placeholder from '../src/assets/macbook.jpg'; 
+import placeholder from '../assets/placeholder.jpg'; 
 
 export default function PcPost({pc}) {
 	console.log(pc);

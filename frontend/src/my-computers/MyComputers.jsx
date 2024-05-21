@@ -1,7 +1,7 @@
 import clickImage from '../assets/screen.png'; 
 import {useEffect, useState, useMemo } from "react"; 
 import {getMyPcs} from "../../utils/api/pcService"; 
-import PcPost from "../PcPost";
+import PcPost from "../PcPost/PcPost";
 import { Link, useNavigate } from "react-router-dom";
 import { checkSession, logout } from "/utils/api/sessions";
 
