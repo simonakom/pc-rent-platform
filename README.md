@@ -1,5 +1,5 @@
 
-# <span><img src="./frontend/src/assets/screen.png" alt="rentify" style="height: 1em;"></span> Rentify - PC rent platform
+# <span><img src="./frontend/src/assets/screen.png" alt="rentify-app" style="height: 1em;"></span> Rentify - PC rent platform
 
 <div>
   <img src="https://img.shields.io/badge/📖%20license-%20MIT-a964d0.svg" alt="license"/> 
@@ -28,7 +28,7 @@ Before you begin, ensure you have the following installed on your machine:
 
 1. Clone this repository to your local machine;
 2. Navigate to the project directory;
-3. Navigate to "backend" and add "env" file:
+3. Navigate to "backend" and add "env" file
 
 #### Add `.env` file
 
