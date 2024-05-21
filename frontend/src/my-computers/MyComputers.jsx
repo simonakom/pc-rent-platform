@@ -85,10 +85,13 @@ export default function MyComputers() {
 	return (
 	<div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5 min-h-screen">
 		<div className="container md:w-[80%] lg:w-[85%] xl:w-[95%] bg-[#131313b6] min-h-[700px] rounded-2xl p-6 overflow-hidden">
+			<div className='flex align-center md:ms-10 s-1'> 
+				<img className="w-[60px] md:mt-0 mb-5" src={clickImage} alt="click" />
+				<p className='text-[#f2634a] text-4xl mt-2'>Rentify</p>
+			</div>
 			<div className="mx-10 mb-2 flex items-center flex-col md:flex-row md:justify-between gap-4">
 				{isLoggedIn && (
 				<div className="flex flex-col md:flex-row items-center whitespace-nowrap gap-5">
-					<img className="w-[60px] md:mt-0 ml-4 mr-4 mb-5" src={clickImage} alt="click" />
 					<Link
 						to="/"
 						className="block md:inline-block bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 text-center overflow-hidden"
