@@ -46,7 +46,7 @@ DB_DATABASE="pc_rent_platform"
 ```
 
 4. Install tailwind;
-5. Install dependencies;
+5. Install dependencies:
 
 #### backend:
  - `npm install --save mysql2`
