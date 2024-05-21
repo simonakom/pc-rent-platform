@@ -99,10 +99,16 @@ export default function RegistrationWindow(){
  
     return (
         <div className="register-bg fixed top-0 left-0 w-full h-full bg-cover bg-center flex flex-col justify-center items-center pt-10 pb-16 px-5">
-            <div className="flex items-center gap-2 my-16 bg-[#adaaaa1e] rounded-full px-10 py-2">
-                <img className="w-[40px]" src={clickImage} alt="click" />
+            <div className='flex align-center mt-10'> 
+				<img className="w-[80px] md:mt-0 mb-5" src={clickImage} alt="click" />
+				<p className='text-[#f2634a] text-6xl mt-2'>Rentify</p>
+			</div>
+            <div className="flex items-center gap-2 mb-20 bg-[#adaaaa1e] rounded-full px-10 py-2 ms-10">
                 <h1 className="text-4xl text-[#ffffff]">Registration</h1>
             </div>
+
+
+
             <div className="min-w-[300px] sm:min-w-[400px] bg-[#1d1c1cd4] rounded-xl text-[white] p-10 overflow-y-scroll">
             {message && (
                 <p className="bg-[#df595959] text-[#ffe7e7] text-center rounded-2xl my-5 py-1">{message}</p>

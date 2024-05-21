@@ -31,9 +31,12 @@ export default function LoginPage() {
     const loginInfo = useRef({ username: "", password: "" });
 
 	return (
-		<div className="login-bg w-[100vw] h-[100vh] flex flex-col items-center overflow-y-scroll px-3">
-            <div className="flex items-center gap-2 mb-20 mt-24 bg-[#adaaaa1e] rounded-full px-10 py-2">
-                <img className="w-[40px]" src={clickImage} alt="click" />
+		<div className="login-bg w-[100vw] h-[100vh] flex flex-col items-center overflow-y-scroll px-7">
+            <div className='flex align-center mt-20'> 
+				<img className="w-[80px] md:mt-0 mb-5" src={clickImage} alt="click" />
+				<p className='text-[#f2634a] text-6xl mt-2'>Rentify</p>
+			</div>
+            <div className="flex items-center gap-2 mb-20 bg-[#adaaaa1e] rounded-full px-10 py-2 ms-10">
                 <h1 className="text-4xl text-[#ffffff]">Login</h1>
             </div>
             <div className="w-full sm:max-w-[500px] bg-[#1d1c1cd4] pb-12 pt-6 px-8 rounded-xl">
