@@ -11,7 +11,6 @@ export default function ErrorMessage({ message, onClose }) {
         </div>
     );
 }
-
 ErrorMessage.propTypes = {
     message: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired, 

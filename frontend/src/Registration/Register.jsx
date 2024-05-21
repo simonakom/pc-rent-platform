@@ -11,7 +11,7 @@ export default function RegistrationWindow(){
     const [errorMessage, setErrorMessage] = useState(""); 
     const [message, setMessage] = useState("");
 
-   const userDetailsRef = useRef({
+    const userDetailsRef = useRef({
         username: "",
         password: "",
         email: "",
@@ -98,12 +98,12 @@ export default function RegistrationWindow(){
     console.log("component reredered");
  
     return (
-        <div className="register-bg flex flex-col justify-center items-center overflow-y-scroll pt-10 pb-16 px-5">
+        <div className="register-bg fixed top-0 left-0 w-full h-full bg-cover bg-center flex flex-col justify-center items-center pt-10 pb-16 px-5">
             <div className="flex items-center gap-2 my-16 bg-[#adaaaa1e] rounded-full px-10 py-2">
                 <img className="w-[40px]" src={clickImage} alt="click" />
                 <h1 className="text-4xl text-[#ffffff]">Registration</h1>
             </div>
-            <div className="min-w-[300px] sm:min-w-[400px] bg-[#1d1c1cd4] rounded-xl text-[white] p-10">
+            <div className="min-w-[300px] sm:min-w-[400px] bg-[#1d1c1cd4] rounded-xl text-[white] p-10 overflow-y-scroll">
             {message && (
                 <p className="bg-[#df595959] text-[#ffe7e7] text-center rounded-2xl my-5 py-1">{message}</p>
             )}
@@ -176,8 +176,8 @@ export default function RegistrationWindow(){
                         </label>
                     </div>
 
-                <h1 className="select-none text-xl font-medium mt-10 mb-3 text-[white]">Address details</h1>
-                <hr className="mb-5 border-t-1 border-gray-500" /> 
+                    <h1 className="select-none text-xl font-medium mt-10 mb-3 text-[white]">Address details</h1>
+                    <hr className="mb-5 border-t-1 border-gray-500" /> 
                     <div className="mb-2">
                         <label className="flex flex-col sm:flex-row items-center">
                             <span className="select-none w-full sm:w-1/5 mb-2 sm:mb-0">Country:</span>

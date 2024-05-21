@@ -5,7 +5,7 @@ const upload = require ("../utils/multerConfig")
 const PcImageModel = require ("../model/PcImageModel")
 
 
- //Add to database
+//Add to database
 router.post("/", upload.array("files", 2), async (req, res) => {
 try{
     const { pcName, cpu, gpu, ramType, ramSpeed, ramAmount, pcType} = req.body;
@@ -117,9 +117,7 @@ router.put("/:id", async (req, res) => {
 })
 
 router.get("/my-computers", async (req, res) => {
-
 })
-
 
 module.exports = router;
 

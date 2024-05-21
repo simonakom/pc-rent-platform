@@ -3,7 +3,7 @@ import clickImage from '../assets/screen.png';
 import { useEffect, useRef, useState } from "react";
 import { savePc } from "../../utils/api/pcService";
 import ErrorMessage from "../../src/ErrorMessage/ErrorMessage";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AddPcForm(){
     const [errorMessage, setErrorMessage] = useState(""); 
@@ -22,75 +22,73 @@ export default function AddPcForm(){
     useEffect(() => {
       pcNameInputRef.current.focus();
 
-      const focusCPU = (e) => {
-        if (e.key === "Enter") {
-          cpuInputRef.current.focus();
-        }
-    };
+        const focusCPU = (e) => {
+            if (e.key === "Enter") {
+            cpuInputRef.current.focus();
+            }
+        };
         pcNameInputRef.current?.addEventListener("keydown", focusCPU);
 
-  
-      const focusGPU = (e) => {
-          if (e.key === "Enter") {
-              gpuInputRef.current.focus();
-          }
-      };
-      cpuInputRef.current?.addEventListener("keydown", focusGPU);
+        const focusGPU = (e) => {
+            if (e.key === "Enter") {
+                gpuInputRef.current.focus();
+            }
+        };
+        cpuInputRef.current?.addEventListener("keydown", focusGPU);
 
-      const focusPcType = (e) => {
+        const focusPcType = (e) => {
         if (e.key === "Enter") {
             computerTypeInputRef.current.focus();
-        }
-      };
-      gpuInputRef.current?.addEventListener("keydown", focusPcType);
+            }
+        };
+        gpuInputRef.current?.addEventListener("keydown", focusPcType);
 
-    const focusRamType = (e) => {
-        if (e.key === "Enter") {
-            ramTypeInputRef.current.focus();
-        }
-      };
-      computerTypeInputRef.current?.addEventListener("keydown", focusRamType);
+        const focusRamType = (e) => {
+            if (e.key === "Enter") {
+                ramTypeInputRef.current.focus();
+            }
+        };
+        computerTypeInputRef.current?.addEventListener("keydown", focusRamType);
 
-    const focusRamSpeed = (e) => {
-          if (e.key === "Enter") {
-              ramSpeedInputRef.current.focus();
-          }
-      };
-      ramTypeInputRef.current?.addEventListener("keydown", focusRamSpeed);
+        const focusRamSpeed = (e) => {
+            if (e.key === "Enter") {
+                ramSpeedInputRef.current.focus();
+            }
+        };
+        ramTypeInputRef.current?.addEventListener("keydown", focusRamSpeed);
 
-    const focusRamAmount = (e) => {
-        if (e.key === "Enter") {
-            ramAmountInputRef.current.focus();
-        }
-      };
-      ramSpeedInputRef.current?.addEventListener("keydown", focusRamAmount);
+        const focusRamAmount = (e) => {
+            if (e.key === "Enter") {
+                ramAmountInputRef.current.focus();
+            }
+        };
+        ramSpeedInputRef.current?.addEventListener("keydown", focusRamAmount);
 
-      const focusImage = (e) => {
-        if (e.key === "Enter") {
-            imageInputRef.current.focus();
-        }
-      };
-      ramAmountInputRef.current?.addEventListener("keydown", focusImage);
+        const focusImage = (e) => {
+            if (e.key === "Enter") {
+                imageInputRef.current.focus();
+            }
+        };
+        ramAmountInputRef.current?.addEventListener("keydown", focusImage);
 
-    const send = (e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          registerNewPc(e);
-        }
-      };
-      imageInputRef.current?.addEventListener("keydown", send);
+        const send = (e) => {
+            if (e.key === "Enter") {
+            e.preventDefault();
+            registerNewPc(e);
+            }
+        };
+        imageInputRef.current?.addEventListener("keydown", send);
 
-  // Cleanup function to remove event listeners
-  return () => {
-    cpuInputRef.current?.removeEventListener("keydown", focusGPU);
-    gpuInputRef.current?.removeEventListener("keydown", focusPcType);
-    computerTypeInputRef.current?.removeEventListener("keydown", focusRamType);
-    ramTypeInputRef.current?.removeEventListener("keydown", focusRamSpeed);
-    ramSpeedInputRef.current?.removeEventListener("keydown", focusRamAmount);
-    ramAmountInputRef.current?.removeEventListener("keydown", focusImage);
-    imageInputRef.current?.removeEventListener("keydown", send);
-    
-};
+    // Cleanup function to remove event listeners
+    return () => {
+        cpuInputRef.current?.removeEventListener("keydown", focusGPU);
+        gpuInputRef.current?.removeEventListener("keydown", focusPcType);
+        computerTypeInputRef.current?.removeEventListener("keydown", focusRamType);
+        ramTypeInputRef.current?.removeEventListener("keydown", focusRamSpeed);
+        ramSpeedInputRef.current?.removeEventListener("keydown", focusRamAmount);
+        ramAmountInputRef.current?.removeEventListener("keydown", focusImage);
+        imageInputRef.current?.removeEventListener("keydown", send);
+    };
 }, []);
 
     function registerNewPc(e){
@@ -156,7 +154,7 @@ export default function AddPcForm(){
     };
 
     return (
-        <div className="add-pc-bg flex flex-col items-center overflow-y-scroll pt-10">
+        <div className="add-pc-bg flex flex-col items-center overflow-y-scroll pt-10 px-6">
             <div className="flex items-center gap-2 my-16 bg-[#adaaaa1e] rounded-full px-10 py-2">
                 <img className="w-[40px]" src={clickImage} alt="click" />
                 <h1 className="text-4xl text-[#ffffff]">Add PC From</h1>
@@ -273,12 +271,19 @@ export default function AddPcForm(){
                                 className="outline-none w-full sm:w-4/5 px-2 py-1" />
                         </label>
                     </div>
-                        <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center">
                         <button 
                             className="bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 mt-4"
                             onClick={e=>registerNewPc(e)}
                             >Add new PC
                         </button>
+                        <Link
+                            to="/"
+                            className="block md:inline-block bg-[#331c39] hover:bg-purple-800 rounded text-white px-5 py-1 text-center overflow-hidden mt-4"
+                            style={{ maxWidth: "200px" }}
+                        >
+                            Home
+                        </Link>
                     </div>
                 </form>
             </div>

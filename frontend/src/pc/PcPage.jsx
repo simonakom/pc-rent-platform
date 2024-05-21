@@ -7,7 +7,6 @@ import clickImage from '../assets/screen.png';
 import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 import placeholder from '../assets/placeholder.jpg'; 
 
-
 export default function PcPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [isPcFound, setIsPcFound] = useState(false);
@@ -25,6 +24,7 @@ export default function PcPage() {
 	}, [id]);
 
     const navigate = useNavigate();
+
     useEffect(() => {
 		checkSession((data) => {
 			setIsLoggedIn(data.isLoggedIn);
@@ -53,7 +53,7 @@ export default function PcPage() {
             prevIndex === 0 ? pcImages.length - 1 : prevIndex - 1
         );
     };
-
+    
 
     if (!isPcFound) return ( 
         <main className="main-bg flex justify-center items-center">
@@ -99,80 +99,85 @@ export default function PcPage() {
                         </button>
                     )}
                 </div>
-                <div className="flex justify-center"> 
-                    <div className=" bg-[#131313b6] text-white rounded-xl max-w-[500px] overflow-hidden relative">
-                        <div className="pc-image bg-blue-50 relative">
-                            <img
-                                src={pcImages.length === 0 ? placeholder : "/server/api/" + pcImages[currentImageIndex].uri}
-                                alt="pc-image"
-                                className="max-h-[300px]"
-                            />
-                            {pcImages.length > 1 && (
-                                <>
-                                    <button
-                                        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
-                                        onClick={handlePrevImage}
-                                    >
-                                        <FaAngleDoubleLeft />
-                                    </button>
-                                    <button
-                                        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
-                                        onClick={handleNextImage}
-                                    >
-                                        <FaAngleDoubleRight />
+                <div className="flex flex-col">
+                    <div className="flex justify-center"> 
+                        <div className=" bg-[#131313b6] text-white rounded-xl max-w-[500px] overflow-hidden relative">
+                            <div className="pc-image bg-blue-50 relative">
+                                <img
+                                    src={pcImages.length === 0 ? placeholder : "/server/api/" + pcImages[currentImageIndex].uri}
+                                    alt="pc-image"
+                                    className="max-h-[300px]"
+                                />
+                                {pcImages.length > 1 && (
+                                    <>
+                                        <button
+                                            className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
+                                            onClick={handlePrevImage}
+                                        >
+                                            <FaAngleDoubleLeft />
+                                        </button>
+                                        <button
+                                            className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-[#80808099] text-white p-2 mx-3 rounded-full"
+                                            onClick={handleNextImage}
+                                        >
+                                            <FaAngleDoubleRight />
 
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                        <div className="p-4 ml-10">
-                            <h3 className="text-4xl mb-5 border-b-4 text-white border-[#c085b8] w-fit pr-4 text-center]">
-                                {pcDetails.pcName}
-                            </h3>
-                            <p className="font-bold mb-4 text-sm">
-                                Owner: <span className="italic font-normal">User123</span>
-                            </p>
-                            <h3 className="font-bold text-sm mb-4">Specifications:</h3>
-                            <div className="text-sm">
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        CPU
-                                    </span>
-                                    <span>{pcDetails.cpu}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        GPU:
-                                    </span>
-                                    <span>{pcDetails.gpu}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        Pc type:
-                                    </span>
-                                    <span>{pcDetails.pcType}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        Ram type:
-                                    </span>
-                                    <span>{pcDetails.ramType}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        Ram speed:
-                                    </span>
-                                    <span>{pcDetails.ramSpeed}</span>
-                                </div>
-                                <div className="flex flex-wrap gap-x-4 mb-1">
-                                    <span className="inline-block w-3/7 font-bold">
-                                        Ram amount:
-                                    </span>
-                                    <span>{pcDetails.ramAmount}</span>
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                            <div className="p-4 ml-10">
+                                <h3 className="md:text-4xl sm:text-2xl text-2xl mb-5 border-b-4 text-white border-[#c085b8] w-fit pr-4 text-center]">
+                                    {pcDetails.pcName}
+                                </h3>
+                                <p className="font-bold mb-4 text-sm">
+                                    Owner: <span className="italic font-normal">User123</span>
+                                </p>
+                                <h3 className="font-bold text-sm mb-4">Specifications:</h3>
+                                <div className="text-sm">
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            CPU
+                                        </span>
+                                        <span>{pcDetails.cpu}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            GPU:
+                                        </span>
+                                        <span>{pcDetails.gpu}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            Pc type:
+                                        </span>
+                                        <span>{pcDetails.pcType}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            Ram type:
+                                        </span>
+                                        <span>{pcDetails.ramType}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            Ram speed:
+                                        </span>
+                                        <span>{pcDetails.ramSpeed}</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-x-4 mb-1">
+                                        <span className="inline-block w-3/7 font-bold">
+                                            Ram amount:
+                                        </span>
+                                        <span>{pcDetails.ramAmount}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="flex flex-col items-center justify-center">
+                        <button className="bg-[#60346b] hover:bg-purple-800 rounded text-white px-8 py-2 mt-4">Rent</button>
+                    </div>  
                 </div>
             </div>
         </div>

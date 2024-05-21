@@ -32,25 +32,25 @@ module.exports = class User {
             return result;
         }
 
-         static async findAll() {
-    const results = await executeStatement(`SELECT * FROM users`);
-    const result = results[0].map(
-      (userObj) =>
-        new User(
-          {
-            username: userObj.username,
-            pass_encoded: userObj.pass_encoded,
-            email: userObj.email,
-            birth_date: userObj.birth_date,
-            phone: userObj.phone,
-            address_id: userObj.address_id,
-            salt: userObj.salt,
-          },
-          userObj.id
-        )
-    );
-    return result;
-  }
+        static async findAll() {
+            const results = await executeStatement(`SELECT * FROM users`);
+            const result = results[0].map(
+            (userObj) =>
+                new User(
+                {
+                    username: userObj.username,
+                    pass_encoded: userObj.pass_encoded,
+                    email: userObj.email,
+                    birth_date: userObj.birth_date,
+                    phone: userObj.phone,
+                    address_id: userObj.address_id,
+                    salt: userObj.salt,
+                },
+                userObj.id
+                )
+            );
+            return result;
+        }
 
         static async findById(id) { 
             const results = await executeQuery(`SELECT * FROM users WHERE id=?`, [id,]);
@@ -74,18 +74,18 @@ module.exports = class User {
 		if (results[0].length === 0) return null;
 		const user = results[0][0];
 		return new User(
-			{
-				username: user.username,
-				passEncoded: user.pass_encoded,
-				email: user.email,
-				birthDate: user.birth_date,
-				phone: user.phone,
-				addressId: user.address_id,
-				salt: user.salt,
-			},
-			user.id
-		);
-	}
+                {
+                    username: user.username,
+                    passEncoded: user.pass_encoded,
+                    email: user.email,
+                    birthDate: user.birth_date,
+                    phone: user.phone,
+                    addressId: user.address_id,
+                    salt: user.salt,
+                },
+                user.id
+            );
+        }
 
         static async deleteById(id) {
             const result = await executeQuery(`DELETE FROM users WHERE id=?`, [id]);

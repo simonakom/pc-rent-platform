@@ -91,7 +91,6 @@ module.exports = class PC {
 		return joinPcs(allPcsWithoutImages, results);
 	}
 
-
 	static async findAllByOwnerId(ownerId) {}
 
 	static async findAllByOwnerIdWithImages(ownerId) {
@@ -118,9 +117,7 @@ module.exports = class PC {
 		return joinPcs(allPcsWithoutImages, results);
 	}
 
-
 	static async findByIdWithImage(id) {}
-
 
 	static async findById(id) { 
 		const results = await executeQuery(`SELECT * FROM pc WHERE id=?`, [id]);
@@ -147,7 +144,6 @@ module.exports = class PC {
 		return result;
 		}
 	
-    
     async update() {
 		const result = await executeQuery(
 			`UPDATE pc SET pc_name =?, owner_id = ?, cpu = ?, gpu = ?, ram_type = ?, ram_speed = ?, ram_amount = ?, pc_type = ? WHERE id = ?`,

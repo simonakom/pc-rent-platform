@@ -62,6 +62,7 @@ export default function MyComputers() {
 		});
 	}, []);
 	const navigate = useNavigate();
+
     useEffect(() => {
 		checkSession((data) => {
 			setIsLoggedIn(data.isLoggedIn);
@@ -71,6 +72,7 @@ export default function MyComputers() {
 		});
 		
 	}, [navigate]);
+	
 	function logOut() {
 		logout((response) => {
 			if (response.status) {
@@ -82,7 +84,7 @@ export default function MyComputers() {
 
 	return (
 	<div className="main-bg flex justify-center overflow-y-scroll pt-10 pb-16 px-5 min-h-screen">
-		<div className="container md:w-[80%] lg:w-[85%] xl:w-[95%] bg-[#131313b6] min-h-[700px] rounded-2xl p-6">
+		<div className="container md:w-[80%] lg:w-[85%] xl:w-[95%] bg-[#131313b6] min-h-[700px] rounded-2xl p-6 overflow-hidden">
 			<div className="mx-10 mb-2 flex items-center flex-col md:flex-row md:justify-between gap-4">
 				{isLoggedIn && (
 				<div className="flex flex-col md:flex-row items-center whitespace-nowrap gap-5">
@@ -104,6 +106,7 @@ export default function MyComputers() {
 					</button>
 				)}
 			</div>
+			<div className="text-[#ffffff] bg-[#60346b84] rounded-2xl text-2xl my-5 px-7 py-2 w-fit mx-auto">My Computers</div>
 			<div className="text-white flex flex-wrap justify-center md:justify-start gap-4">
 				<select 
 					className='bg-[#4847474d] mx-1 px-4 py-1 rounded-xl hover:text-[black] hover:bg-[#d3caca7b]'

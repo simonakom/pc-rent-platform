@@ -16,13 +16,11 @@ export async function savePc(pc, callback) {
         const response = await promise.json();
         callback (response);
 	}
-
 	export async function getById(id, callback){
 		const promise = await fetch(`/server/api/pc/${id}`);
         const response = await promise.json();
         callback (response);
 	}
-
 	export async function getMyPcs(callback) {
 		const promise = await fetch("/server/api/pc/my-computers");
 		const response = await promise.json();
