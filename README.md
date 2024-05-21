@@ -93,13 +93,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ### Mobile version:
   <img src="./frontend/src/assets/readme-images/m-registration.png" alt="registration"  width="300" style="border-radius: 5px;" />
-  <img src="./frontend/src/assets/readme-images/m-login.png" alt="login" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-home.png" alt="home" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-add-pc.png" alt="add-pc" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-my-pc.png" alt="my-pc" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-pc.png" alt="pc" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-no-pc.png" alt="no-pc" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
-  <img src="./frontend/src/assets/readme-images/m-not-found.png" alt="not-found" style="border-radius: 5px; display: inline-block; width: 700px; height: auto;" />
+  <img src="./frontend/src/assets/readme-images/m-login.png" alt="login" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-home.png" alt="home" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-add-pc.png" alt="add-pc" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-my-pc.png" alt="my-pc" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-pc.png" alt="pc" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-no-pc.png" alt="no-pc" width="300" style="border-radius: 5px;" />
+  <img src="./frontend/src/assets/readme-images/m-not-found.png" alt="not-found" width="300" style="border-radius: 5px;" />
 </div>
 
 
