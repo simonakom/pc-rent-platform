@@ -155,9 +155,12 @@ export default function AddPcForm(){
 
     return (
         <div className="add-pc-bg flex flex-col items-center overflow-y-scroll pt-10 px-6">
-            <div className="flex items-center gap-2 my-16 bg-[#adaaaa1e] rounded-full px-10 py-2">
-                <img className="w-[40px]" src={clickImage} alt="click" />
-                <h1 className="text-4xl text-[#ffffff]">Add PC From</h1>
+             <div className='flex align-center mt-10'> 
+				<img className="w-[80px] md:mt-0 mb-5" src={clickImage} alt="click" />
+				<p className='text-[#f2634a] text-6xl mt-2'>Rentify</p>
+			</div>
+            <div className="flex items-center gap-2 mb-20 bg-[#adaaaa1e] rounded-full px-10 py-2 ms-10">
+                <h1 className="text-4xl text-[#ffffff]">Add Pc Form</h1>
             </div>
             <div className="min-w-[300px] sm:min-w-[500px] bg-[#1d1c1ce0] rounded-xl text-[white] p-10">
             {/* {message && (
