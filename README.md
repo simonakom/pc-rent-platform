@@ -63,7 +63,9 @@ DB_DATABASE="pc_rent_platform"
 
 
 ## Viewing the App
-Once the dependencies are installed, you can start the development server and run the app:  frontend - `npm run dev` backend `node index` or if installed `nodemon`.
+Once the dependencies are installed, you can start the development server and run the app:  
+- frontend - `npm run dev`;
+- backend `node index` or if installed `nodemon`;
 
 ## Todo
 
